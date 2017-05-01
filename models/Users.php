@@ -43,9 +43,16 @@ class Users extends Model {
             }
         }
     }
+    
+    public function logout() {
+        unset($_SESSION['ccUser']);
+    }
 
     public function getCompany() {
         return $this->userInfo['id_company'];
     }
-
+    
+    public function getEmail() {
+        return $this->userInfo['email'];
+    }
 }
