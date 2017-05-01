@@ -2,19 +2,20 @@
 
 class HomeController extends Controller {
 
-    public function index() {
-        $fotos = new Fotos();
+    public function __construct() {
+        parent::__construct();
 
-        // $dados['fotos'] = $fotos->getFotos();
-        $dados = array(
-            'fotos' => $fotos->getFotos()
-        );
-        $this->loadTemplate('home', $dados);
+        $u = new Users();
+        if (!$u->isLogged()) {
+            header("Location: " . BASE_URL . "/login");
+            exit();
+        }
     }
 
-    public function sobre() {
-        $dados = array();
-        $this->loadTemplate('sobre', $dados);
+    public function index() {
+        $data = array();
+
+        $this->loadView('home', $data);
     }
 
 }

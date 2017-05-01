@@ -1,5 +1,9 @@
 <?php
+session_start();
 require './config.php';
+
+define('BASE_URL', 'http://localhost/RecriandoContaAzul');
+
 /**
  * CONFIGURANDO AUTO-LOAD 
  */
