@@ -2,6 +2,7 @@ body{
     margin: 0;
     padding: 0;
     font-size: 13px;
+    font-family: Arial;
 }
 
 .leftmenu{
@@ -20,17 +21,50 @@ body{
     text-align: center;
 }
 
+.leftmenu .menuarea{
+    color: #FFF;
+}
+.menuarea ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.menuarea ul li{
+    height: 40px;
+    line-height: 40px;
+    font-size: 12px;
+    padding-left: 30px;
+    background-size: 10px 10px;
+    background-repeat: no-repeat;
+    background-position: 10px 14px;
+}
+.menuarea ul li:hover{
+    background-color: #000;
+}
+.menuarea ul li a{
+    color: #FFF;
+    text-decoration: none;
+    display: block;
+}
+.menuarea li:nth-child(1){
+    background-image: url(../images/home.png);
+}
+.menuarea li:nth-child(2){
+    background-image: url(../images/key.png);
+}
+
+
 
 
 .container{
     padding-left: 200px;
-    
+
 }
 .container .top{
     height: 40px;
     background-color: #232830;
     color: #FFF;
-    font-size: 15px;
+    font-size: 13px;
 }
 .container .top .top_right{
     float: right;

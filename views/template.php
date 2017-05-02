@@ -11,15 +11,26 @@
             <div class="company_name">
                 <?= $viewData['company_name'] ?>
             </div>
-        </div>
-        <div class="container">
-            <div class="top">
-                <div class="top_right"><a href="<?= BASE_URL . "/login/logout" ?>">Sair</a></div>
-                <div class="top_right"><?= $viewData['user_email'] ?></div>
+
+            <div class="menuarea">
+                <ul>
+                    <li class=""><a href="<?= BASE_URL ?>">Home</a></li>
+                    <li><a href="<?= BASE_URL ?>/permissions">Permissões</a></li>
+                </ul>
             </div>
         </div>
 
-        <?php //$this->loadViewInTemplate($viewName, $viewData) ?>
+
+        <div class="container">
+            <div class="top">
+                <div class="top_right"><a href="<?= BASE_URL ?>/login/logout">Sair</a></div>
+                <div class="top_right"><?= $viewData['user_email'] ?></div>
+            </div>
+
+            <div class="area">
+                <?php $this->loadViewInTemplate($viewName, $viewData) ?>
+            </div>
+        </div>
 
     </body>
 </html>
