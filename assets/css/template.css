@@ -4,7 +4,9 @@ body{
     font-size: 13px;
     font-family: Arial;
 }
-
+/******************************
+************ MENU *************
+******************************/
 .leftmenu{
     width: 200px;
     background-color: #1F232A;
@@ -55,10 +57,11 @@ body{
 
 
 
-
+/******************************
+********* CONTAINER ***********
+******************************/
 .container{
     padding-left: 200px;
-
 }
 .container .top{
     height: 40px;
@@ -75,4 +78,30 @@ body{
 .container .top .top_right a{
     color: #FFF;
     text-decoration: none;
+}
+
+
+
+/******************************
+******* CONTAINER-AREA ********
+******************************/
+.container .area{
+    padding: 15px;
+}
+.tabarea .tabitem{
+    width: 50%;
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-bottom: 1px solid #000;
+    background-color: #EEE;
+    cursor: pointer;
+}
+.tabarea .tabitem.activetab{
+    border-bottom: 1px solid #FFF;
+    background-color: #FFF;
+}
+.tabcontent .tabbody{
+    display: none;
 }

@@ -1,6 +1,6 @@
 <?php
 
-class HomeController extends Controller {
+class PermissionsController extends Controller {
 
     public function __construct() {
         parent::__construct();
@@ -21,8 +21,8 @@ class HomeController extends Controller {
         $company = new Companies($u->getCompany());
         $data['company_name'] = $company->getName();
         $data['user_email'] = $u->getEmail();
-
-        $this->loadTemplate('home', $data);
+        
+        $this->loadTemplate('permissions', $data);
     }
 
 }
