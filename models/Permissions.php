@@ -19,7 +19,7 @@ class Permissions extends Model {
         if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch();
 
-            // consultando esses 'params' para saber quais os nomes dos parametros que tem o grupo
+            // consultando esses 'params' para saber quais os nomes
             // e no final adicionar cada nome ao array de $this->permissions
             if (empty($row['params'])) {
                 $row['params'] = '0';
