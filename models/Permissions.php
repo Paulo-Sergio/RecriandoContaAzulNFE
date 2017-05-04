@@ -25,7 +25,7 @@ class Permissions extends Model {
                 $row['params'] = '0';
             }
             $params = $row['params'];
-            
+
             $sql = "SELECT name FROM permission_params WHERE id IN ($params) AND id_company = :id_company";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':id_company', $id_company);
@@ -45,6 +45,35 @@ class Permissions extends Model {
             return true;
         }
         return false;
+    }
+
+    public function getList($id_company) {
+        $array = array();
+
+        $stmt = $this->db->prepare("SELECT * FROM permission_params WHERE id_company = :id_company");
+        $stmt->bindParam(':id_company', $id_company);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $array = $stmt->fetchAll();
+        }
+
+        return $array;
+    }
+    
+    public function add($name, $id_company) {
+        $sql = "INSERT INTO permission_params SET name = :name, id_company = :id_company";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':id_company', $id_company);
+        $stmt->execute();
+    }
+    
+    public function delete($id) {
+        $sql = "DELETE FROM permission_params WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
     }
 
 }

@@ -9,7 +9,21 @@
     <div class="tabbody">
         GRUPOS DE PERMISSOES
     </div>
+
     <div class="tabbody">
-        PERMISSOES
+        <a href="<?= BASE_URL ?>/permissions/add">Adicionar Permissão</a>
+
+        <table width="100%">
+            <tr>
+                <th>Nome da Permissão</th>
+                <th>Ações</th>
+            </tr>
+            <?php foreach ($permission_list as $p): ?>
+                <tr>
+                    <td><?= $p['name'] ?></td>
+                    <td><a href="<?= BASE_URL ?>/permissions/delete/<?= $p['id'] ?>">Excluir</a></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
     </div>
 </div>
