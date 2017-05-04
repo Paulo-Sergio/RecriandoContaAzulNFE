@@ -11,17 +11,17 @@
     </div>
 
     <div class="tabbody">
-        <a href="<?= BASE_URL ?>/permissions/add">Adicionar Permissão</a>
+        <a class="button" href="<?= BASE_URL ?>/permissions/add">Adicionar Permissão</a>
 
         <table width="100%">
             <tr>
                 <th>Nome da Permissão</th>
-                <th>Ações</th>
+                <th width="50">Ações</th>
             </tr>
             <?php foreach ($permission_list as $p): ?>
                 <tr>
                     <td><?= $p['name'] ?></td>
-                    <td><a href="<?= BASE_URL ?>/permissions/delete/<?= $p['id'] ?>">Excluir</a></td>
+                    <td><a class="button button_small" href="<?= BASE_URL ?>/permissions/delete/<?= $p['id'] ?>">Excluir</a></td>
                 </tr>
             <?php endforeach; ?>
         </table>
