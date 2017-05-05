@@ -60,7 +60,21 @@ class Permissions extends Model {
 
         return $array;
     }
-    
+
+    public function getGroupList($id_company) {
+        $array = array();
+
+        $stmt = $this->db->prepare("SELECT * FROM permission_groups WHERE id_company = :id_company");
+        $stmt->bindParam(':id_company', $id_company);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $array = $stmt->fetchAll();
+        }
+
+        return $array;
+    }
+
     public function add($name, $id_company) {
         $sql = "INSERT INTO permission_params SET name = :name, id_company = :id_company";
         $stmt = $this->db->prepare($sql);
@@ -68,7 +82,7 @@ class Permissions extends Model {
         $stmt->bindParam(':id_company', $id_company);
         $stmt->execute();
     }
-    
+
     public function delete($id) {
         $sql = "DELETE FROM permission_params WHERE id = :id";
         $stmt = $this->db->prepare($sql);
