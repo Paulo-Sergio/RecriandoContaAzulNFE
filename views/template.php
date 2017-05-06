@@ -19,6 +19,7 @@
                     <li class=""><a href="<?= BASE_URL ?>">Home</a></li>
                     <li><a href="<?= BASE_URL ?>/permissions">Permissões</a></li>
                     <li><a href="<?= BASE_URL ?>/users">Usuários</a></li>
+                    <li><a href="<?= BASE_URL ?>/clients">Clientes</a></li>
                 </ul>
             </div>
         </div>
