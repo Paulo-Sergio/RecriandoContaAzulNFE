@@ -43,15 +43,15 @@ class Users extends Model {
                 $this->userInfo = $stmt->fetch();
                 $this->permissions = new Permissions();
                 // ao settar info's do usuario, vou settar o grupo que o mesmo pertence
-                $this->permissions->setGroup($this->userInfo['group'], $this->userInfo['id_company']);
+                $this->permissions->setGroup($this->userInfo['id_group'], $this->userInfo['id_company']);
             }
         }
     }
-    
+
     public function logout() {
         unset($_SESSION['ccUser']);
     }
-    
+
     public function hasPermission($name) {
         return $this->permissions->hasPermission($name);
     }
@@ -59,8 +59,23 @@ class Users extends Model {
     public function getCompany() {
         return $this->userInfo['id_company'];
     }
-    
+
     public function getEmail() {
         return $this->userInfo['email'];
     }
+
+    public function findUsersInGroup($id) {
+        $sql = "SELECT COUNT(*) as c FROM users WHERE id_group = :group";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":group", $id);
+        $stmt->execute();
+
+        $row = $stmt->fetch();
+        if ($row['c'] == '0') {
+            return false;
+        }
+
+        return true;
+    }
+
 }

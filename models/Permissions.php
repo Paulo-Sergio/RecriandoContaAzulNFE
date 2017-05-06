@@ -75,6 +75,22 @@ class Permissions extends Model {
         return $array;
     }
 
+    public function getGroup($id, $id_company) {
+        $array = array();
+
+        $stmt = $this->db->prepare("SELECT * FROM permission_groups WHERE id = :id AND :id_company = id_company");
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':id_company', $id_company);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $array = $stmt->fetch();
+            $array['params'] = explode(",", $array['params']);
+        }
+
+        return $array;
+    }
+
     public function add($name, $id_company) {
         $sql = "INSERT INTO permission_params SET name = :name, id_company = :id_company";
         $stmt = $this->db->prepare($sql);
@@ -83,11 +99,46 @@ class Permissions extends Model {
         $stmt->execute();
     }
 
+    public function addGroup($name, $plist, $id_company) {
+        $params = implode(",", $plist);
+
+        $sql = "INSERT INTO permission_groups SET name = :name, id_company = :id_company, params = :params";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':id_company', $id_company);
+        $stmt->bindParam(':params', $params);
+        $stmt->execute();
+    }
+
+    public function editGroup($name, $plist, $id, $id_company) {
+        $params = implode(",", $plist);
+
+        $sql = "UPDATE permission_groups SET name = :name, id_company = :id_company, params = :params WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':id_company', $id_company);
+        $stmt->bindParam(':params', $params);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+    }
+
     public function delete($id) {
         $sql = "DELETE FROM permission_params WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
+    }
+
+    public function deleteGroup($id) {
+        $u = new Users();
+
+        // verifica se tem algum usuario associado a este grupo
+        if ($u->findUsersInGroup($id) == false) {
+            $sql = "DELETE FROM permission_groups WHERE id = :id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+        }
     }
 
 }
