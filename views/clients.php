@@ -19,8 +19,13 @@
             <td><?= $c['address_city'] ?></td>
             <td><?= $c['stars'] ?></td>
             <td>
-                <a class="button button_small" href="<?= BASE_URL ?>/clients/edit/<?= $us['id'] ?>">Editar</a>
-                <a class="button button_small" href="<?= BASE_URL ?>/clients/delete/<?= $us['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir ?')">Excluir</a>
+                <?php if ($edit_permission) : ?>
+                    <a class="button button_small" href="<?= BASE_URL ?>/clients/edit/<?= $c['id'] ?>">Editar</a>
+                    <a class="button button_small" href="<?= BASE_URL ?>/clients/delete/<?= $c['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir ?')">Excluir</a>
+                <?php else : ?>
+                    <a class="button button_small" href="<?= BASE_URL ?>/clients/view/<?= $c['id'] ?>">Visualizar</a>
+                <?php endif; ?>
+
             </td>
         </tr>
     <?php endforeach; ?>
