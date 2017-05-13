@@ -30,3 +30,10 @@
         </tr>
     <?php endforeach; ?>
 </table>
+
+<div class="pagination">
+    <?php for ($i = 1; $i <= $p_count; $i++): ?>
+        <div class="pag_item <?= ($i == $p) ? 'pag_ativo' : '' ?>"><a href="<?= BASE_URL ?>/clients?p=<?= $i ?>"><?= $i ?></a></div>
+    <?php endfor; ?>
+    <div style="clear: both"></div>
+</div>

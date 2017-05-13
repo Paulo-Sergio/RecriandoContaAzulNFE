@@ -71,7 +71,7 @@ table td{
 .leftmenu{
     width: 200px;
     background-color: #1F232A;
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     bottom: 0;
@@ -183,4 +183,28 @@ table td{
     border: 2px solid #CCC;
     border-radius: 3px;
     margin: 10px 0; 
+}
+.pagination{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.pagination .pag_item{
+    width: 20px;
+    height: 20px;
+    float: left;
+    border: 1px solid #224074;
+    margin-right: 3px;
+    text-align: center;
+    line-height: 20px;
+}
+.pagination .pag_item a{
+    color: #224074;
+    text-decoration: none;
+}
+.pagination .pag_item.pag_ativo{
+    background-color: #224074;
+    color: #FFF;
+}
+.pagination .pag_item.pag_ativo a{
+    color: #FFF;
 }
