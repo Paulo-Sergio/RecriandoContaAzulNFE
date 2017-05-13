@@ -3,6 +3,7 @@
 <?php if ($edit_permission): ?>
     <a class="button" href="<?= BASE_URL ?>/clients/add">Adicionar Cliente</a>
 <?php endif; ?>
+<input type="text" id="busca" data-type="search_clients"/>
 
 <table width="100%">
     <tr>

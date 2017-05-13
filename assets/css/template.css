@@ -118,6 +118,9 @@ table td{
 .menuarea li:nth-child(3){
     background-image: url(../images/users.png);
 }
+.menuarea li:nth-child(4){
+    background-image: url(../images/client.png);
+}
 
 
 
@@ -184,6 +187,11 @@ table td{
     border-radius: 3px;
     margin: 10px 0; 
 }
+
+
+/******************************
+**** PARA PAGINA CLIENTS ******
+******************************/
 .pagination{
     margin-top: 30px;
     margin-bottom: 30px;
@@ -207,4 +215,34 @@ table td{
 }
 .pagination .pag_item.pag_ativo a{
     color: #FFF;
+}
+#busca{
+    width: 100px;
+    float: right;
+    background-image: url("../images/search.png");
+    background-repeat: no-repeat;
+    background-size: 15px 15px;
+    background-position: 5px;
+    padding-left: 25px;
+    border-radius: 3px;
+    border: 1px solid #CCC;
+}
+.searchresults{
+    width: 248px;
+    background-color: #FFF;
+    position: absolute;
+}
+.si{
+    height: 30px;
+    line-height: 30px;
+    padding-left: 10px;
+    cursor: pointer;
+}
+.si a{
+    color: #000;
+    text-decoration: none;
+    display: block;
+}
+.si:hover{
+    background-color: #EEE;
 }

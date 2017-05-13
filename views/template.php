@@ -5,6 +5,9 @@
         <title>Painel - <?= $viewData['company_name'] ?></title>
         <link href="<?= BASE_URL ?>/assets/css/template.css" rel="stylesheet"/>
         <script type="text/javascript" src="<?= BASE_URL ?>/assets/js/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript">
+            var BASE_URL = "<?= BASE_URL ?>";
+        </script>
         <script type="text/javascript" src="<?= BASE_URL ?>/assets/js/script.js"></script>
     </head>
     <body>
