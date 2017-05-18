@@ -31,7 +31,10 @@ CREATE TABLE `clients` (
   `email` varchar(100) DEFAULT NULL,
   `phone` varchar(50) DEFAULT NULL,
   `address` varchar(100) DEFAULT NULL,
+  `address2` varchar(45) DEFAULT NULL,
+  `address_number` varchar(45) DEFAULT NULL,
   `address_neighb` varchar(50) DEFAULT NULL,
+  `address_state` varchar(45) DEFAULT NULL,
   `address_city` varchar(50) DEFAULT NULL,
   `address_country` varchar(50) DEFAULT NULL,
   `address_zipcode` varchar(50) DEFAULT NULL,
@@ -40,7 +43,7 @@ CREATE TABLE `clients` (
   PRIMARY KEY (`id`),
   KEY `id_company_clients_fk_idx` (`id_company`),
   CONSTRAINT `id_company_clients_fk` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,6 +52,7 @@ CREATE TABLE `clients` (
 
 LOCK TABLES `clients` WRITE;
 /*!40000 ALTER TABLE `clients` DISABLE KEYS */;
+INSERT INTO `clients` VALUES (2,1,'Cliente teste','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','618','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(3,1,'Cliente teste 2','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','618','Boa Viagem','PE','Recife','Brasil','51021130',2,'cliente bom pagador 2'),(4,1,'Cliente teste 3','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','618','Boa Viagem','PE','Recife','Brasil','51021130',1,'cliente bom pagador 2'),(5,1,'Cliente teste 4','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','618','Boa Viagem','PE','Recife','Brasil','51021130',3,'cliente bom pagador 2'),(6,1,'Cliente teste 5','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','618','Boa Viagem','PE','Recife','Brasil','51021130',5,'cliente bom pagador 2'),(7,1,'Cliente teste 6','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','6346','Boa Viagem','PE','Recife','Brasil','51021130',3,'cliente bom pagador 2'),(8,1,'Cliente teste 7','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','534','Boa Viagem','PE','Recife','Brasil','51021130',2,'cliente bom pagador 2'),(9,1,'Cliente teste 8','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','634','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(10,1,'Cliente teste 9','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','523','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(11,1,'Cliente teste 10','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','6234','Boa Viagem','PE','Recife','Brasil','51021130',3,'cliente bom pagador 2'),(12,1,'Cliente teste 11','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','6234','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(13,1,'Cliente teste 12','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','0890','Boa Viagem','PE','Recife','Brasil','51021130',5,'cliente bom pagador 2'),(14,1,'Cliente teste 13','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','67','Boa Viagem','PE','Recife','Brasil','51021130',2,'cliente bom pagador 2'),(15,1,'Cliente teste 14','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','45','Boa Viagem','PE','Recife','Brasil','51021130',2,'cliente bom pagador 2'),(16,1,'Cliente teste 15','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','64','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(17,1,'Cliente teste 16','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','47','Boa Viagem','PE','Recife','Brasil','51021130',3,'cliente bom pagador 2'),(18,1,'Cliente teste 17','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','567','Boa Viagem','PE','Recife','Brasil','51021130',5,'cliente bom pagador 2'),(19,1,'Cliente teste 18','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','5247','Boa Viagem','PE','Recife','Brasil','51021130',3,'cliente bom pagador 2'),(20,1,'Cliente teste 19','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','3','Boa Viagem','PE','Recife','Brasil','51021130',5,'cliente bom pagador 2'),(21,1,'Cliente teste 20','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','652','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(22,1,'Cliente teste 21','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','658','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(23,1,'Cliente teste 22','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','98','Boa Viagem','PE','Recife','Brasil','51021130',5,'cliente bom pagador 2'),(24,1,'Cliente teste 23','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','897','Boa Viagem','PE','Recife','Brasil','51021130',3,'cliente bom pagador 2'),(25,1,'Cliente teste 24','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','745','Boa Viagem','PE','Recife','Brasil','51021130',2,'cliente bom pagador 2'),(26,1,'Cliente teste 25','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','76','Boa Viagem','PE','Recife','Brasil','51021130',1,'cliente bom pagador 2');
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,7 +67,7 @@ CREATE TABLE `companies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +76,7 @@ CREATE TABLE `companies` (
 
 LOCK TABLES `companies` WRITE;
 /*!40000 ALTER TABLE `companies` DISABLE KEYS */;
-INSERT INTO `companies` VALUES (1,'Empresa 123');
+INSERT INTO `companies` VALUES (1,'Empresa 123'),(2,'Paulo Admin');
 /*!40000 ALTER TABLE `companies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,7 +157,7 @@ CREATE TABLE `permission_groups` (
   PRIMARY KEY (`id`),
   KEY `id_company_permission_groups_fk_idx` (`id_company`),
   CONSTRAINT `id_company_permission_groups_fk` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -162,7 +166,7 @@ CREATE TABLE `permission_groups` (
 
 LOCK TABLES `permission_groups` WRITE;
 /*!40000 ALTER TABLE `permission_groups` DISABLE KEYS */;
-INSERT INTO `permission_groups` VALUES (1,1,'Ficticio','1,2');
+INSERT INTO `permission_groups` VALUES (1,1,'Desenvolvedores','1,2,6,7,8,9,10,11'),(5,2,'Grupo de teste 3','1,2,3,4'),(6,1,'Group of test','5');
 /*!40000 ALTER TABLE `permission_groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,7 +184,7 @@ CREATE TABLE `permission_params` (
   PRIMARY KEY (`id`),
   KEY `id_company_permission_params_fk_idx` (`id_company`),
   CONSTRAINT `id_company_permission_params_fk` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -189,6 +193,7 @@ CREATE TABLE `permission_params` (
 
 LOCK TABLES `permission_params` WRITE;
 /*!40000 ALTER TABLE `permission_params` DISABLE KEYS */;
+INSERT INTO `permission_params` VALUES (1,1,'logout'),(2,1,'permissions_view'),(3,2,'permissions_view'),(4,2,'permission_usuarios_ex'),(6,1,'users_view'),(7,1,'clients_view'),(8,1,'clients_edit'),(9,1,'inventory_view'),(10,1,'inventory_add'),(11,1,'inventory_edit');
 /*!40000 ALTER TABLE `permission_params` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -331,13 +336,13 @@ CREATE TABLE `users` (
   `id_company` int(11) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(32) NOT NULL,
-  `group` int(11) NOT NULL,
+  `id_group` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_company_users_fk_idx` (`id_company`),
-  KEY `group_users_fk_idx` (`group`),
-  CONSTRAINT `group_users_fk` FOREIGN KEY (`group`) REFERENCES `permission_groups` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `group_users_fk_idx` (`id_group`),
+  CONSTRAINT `group_users_fk` FOREIGN KEY (`id_group`) REFERENCES `permission_groups` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `id_company_users_fk` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -346,7 +351,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,1,'admin@empresa123.com.br','202cb962ac59075b964b07152d234b70',1);
+INSERT INTO `users` VALUES (1,1,'admin@empresa123.com.br','202cb962ac59075b964b07152d234b70',1),(5,2,'paulo@admin.com.br','202cb962ac59075b964b07152d234b70',5),(7,1,'teste@teste.com','e10adc3949ba59abbe56e057f20f883e',6),(8,1,'novodev@dev.com.br','202cb962ac59075b964b07152d234b70',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -359,4 +364,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-01 21:58:28
+-- Dump completed on 2017-05-17 23:25:24
