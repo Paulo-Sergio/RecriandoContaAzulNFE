@@ -9,8 +9,8 @@
     <tr>
         <th>Nome</th>
         <th>Preço</th>
-        <th>Quantidade</th>
-        <th>Quant. Min.</th>
+        <th width="60">Quant.</th>
+        <th width="75">Quant. Min.</th>
         <th width="160">Ações</th>
     </tr>
     <?php foreach ($inventory_list as $product): ?>
@@ -18,7 +18,13 @@
             <td><?= $product['name'] ?></td>
             <td>R$ <?= number_format($product['price'], 2) ?></td>
             <td><?= $product['quant'] ?></td>
-            <td><?= $product['min_quant'] ?></td>
+            <td>
+                <?php if ($product['quant'] < $product['min_quant']) { ?>
+                    <span style="color: red; font-weight: bolder"><?= $product['min_quant'] ?></span>
+                <?php } else { ?>
+                    <?= $product['min_quant'] ?>
+                <?php } ?>
+            </td>
             <td></td>
         </tr>
     <?php endforeach; ?>

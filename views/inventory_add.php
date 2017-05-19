@@ -14,7 +14,7 @@
     <label for="quant">Quantidade em Estoque</label>
     <input type="number" name="quant" required><br><br>
 
-    <label for="min_quant">Quantidade em Estoque</label>
+    <label for="min_quant">Quantidade Mínima em Estoque</label>
     <input type="number" name="min_quant" required><br><br>
 
     <input type="submit" value="Adicionar">

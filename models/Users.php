@@ -63,6 +63,10 @@ class Users extends Model {
     public function getEmail() {
         return $this->userInfo['email'];
     }
+    
+    public function getId() {
+        return $this->userInfo['id'];
+    }
 
     public function getInfo($id, $idCompany) {
         $array = array();
