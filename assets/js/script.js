@@ -37,6 +37,7 @@ $(document).ready(function () {
         }, 500);
     });
 
+    // implementando auto-complete no campo de busca [busca de cliente, na tela clients]
     $('#busca').on('keyup', function () {
         var datatype = $(this).attr('data-type');
         var queryVal = $(this).val();

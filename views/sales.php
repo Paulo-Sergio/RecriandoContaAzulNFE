@@ -1,5 +1,7 @@
 <h1>Vendas</h1>
 
+<a class="button" href="<?= BASE_URL ?>/sales/add">Adicionar Venda</a>
+
 <table width="100%">
     <tr>
         <th>Nome do Cliente</th>
