@@ -16,7 +16,7 @@
     <?php foreach ($inventory_list as $product): ?>
         <tr>
             <td><?= $product['name'] ?></td>
-            <td>R$ <?= number_format($product['price'], 2) ?></td>
+            <td>R$ <?= number_format($product['price'], 2, ',', '.') ?></td>
             <td><?= $product['quant'] ?></td>
             <td>
                 <?php if ($product['quant'] < $product['min_quant']) { ?>
@@ -25,7 +25,10 @@
                     <?= $product['min_quant'] ?>
                 <?php } ?>
             </td>
-            <td></td>
+            <td>
+                <a class="button button_small" href="<?= BASE_URL ?>/inventory/edit/<?= $product['id'] ?>">Editar</a>
+                <a class="button button_small" href="<?= BASE_URL ?>/inventory/delete/<?= $product['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir ?')">Excluir</a>
+            </td>
         </tr>
     <?php endforeach; ?>
 </table>
