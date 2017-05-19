@@ -125,6 +125,9 @@ table td{
 .menuarea li:nth-child(5){
     background-image: url(../images/inventory.png);
 }
+.menuarea li:nth-child(6){
+    background-image: url(../images/sales.png);
+}
 
 
 /******************************

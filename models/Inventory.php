@@ -46,7 +46,9 @@ class Inventory extends Model {
     }
 
     public function edit($id, $name, $price, $quant, $min_quant, $idCompany, $idUser) {
-        $sql = "UPDATE inventory SET name = :name, price = :price, quant = :quant, min_quant = :min_quant WHERE id = :id AND id_company = :id_company";
+        $sql = "UPDATE inventory "
+                . "SET name = :name, price = :price, quant = :quant, min_quant = :min_quant "
+                . "WHERE id = :id AND id_company = :id_company";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(":name", $name);
         $stmt->bindParam(":price", $price);
