@@ -19,4 +19,17 @@ class Sales extends Model {
         return null;
     }
 
+    public function add($idCompany, $clientId, $userId, $totalPrice, $status) {
+        $sql = "INSERT INTO sales SET id_company = :id_company, id_client = :id_client, "
+                . "id_user = :id_user, date_sale = NOW(), total_price = :total_price, "
+                . "status = :status";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_company', $idCompany);
+        $stmt->bindParam(':id_client', $clientId);
+        $stmt->bindParam(':id_user', $userId);
+        $stmt->bindParam(':total_price', $totalPrice);
+        $stmt->bindParam(':status', $status);
+        $stmt->execute();
+    }
+
 }

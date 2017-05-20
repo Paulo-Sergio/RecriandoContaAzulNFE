@@ -21,11 +21,17 @@ class SalesController extends Controller {
         $company = new Companies($u->getCompany());
         $data['company_name'] = $company->getName();
         $data['user_email'] = $u->getEmail();
+        
+        $data['statuser'] = array(
+            '0' => 'Aguardando Pagamento',
+            '1' => 'Pago',
+            '2' => 'Cancelado'
+        );
 
         if ($u->hasPermission('sales_view')) {
             $s = new Sales();
             $offset = 0;
-            
+
             $data['sales_list'] = $s->getList($offset, $u->getCompany());
 
             $this->loadTemplate('sales', $data);
@@ -34,7 +40,7 @@ class SalesController extends Controller {
             exit();
         }
     }
-    
+
     public function add() {
         $data = array();
 
@@ -46,7 +52,21 @@ class SalesController extends Controller {
         $data['user_email'] = $u->getEmail();
 
         if ($u->hasPermission('sales_view')) {
-            $s = new Sales();            
+            $s = new Sales();
+
+            if (isset($_POST['client_id']) && !empty($_POST['client_id'])) {
+                $clientId = addslashes($_POST['client_id']);
+                $status = addslashes($_POST['status']);
+                $totalPrice = addslashes($_POST['total_price']);
+                
+                // formatando padrao americano para salvar no banco
+                $totalPrice = str_replace('.', '', $totalPrice);
+                $totalPrice = str_replace(',', '.', $totalPrice);
+
+                $s->add($u->getCompany(), $clientId, $u->getId(), $totalPrice, $status);
+                header("Location: " . BASE_URL . "/sales");
+                exit();
+            }
 
             $this->loadTemplate('sales_add', $data);
         } else {
