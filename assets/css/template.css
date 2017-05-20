@@ -252,3 +252,14 @@ table td{
 .si:hover{
     background-color: #EEE;
 }
+
+/******************************
+**** PARA PAGINA SALES ******
+******************************/
+#client_name{
+    width: 250px;
+    display: inline-block;
+}
+.client_add_button{
+    font-size: 17px;
+}

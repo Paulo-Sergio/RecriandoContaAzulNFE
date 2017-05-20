@@ -1,5 +1,28 @@
 $(document).ready(function () {
 
+    // adicionando o cliente via ajax
+    $('.client_add_button').on('click', function (e) {
+        e.preventDefault();
+        
+        var name = $('#client_name').val();
+        if (name != '' && name.length > 4) {
+            if (confirm('Você deseja adicionar um cliente com nome: ' + name + '?')) {
+                alert('adicionando...');
+                $.ajax({
+                    url: BASE_URL + '/ajax/add_client',
+                    type: 'POST',
+                    data: {name: name},
+                    dataType: 'json',
+                    success: function (json) {
+                        $('.searchresults').hide();
+                        $('#client_name').attr('data-id', json.id);
+                    }
+                });
+            }
+        }
+
+    });
+
     // implementando auto-complete do campo cliente [busca de clientes na tela sales_add]
     $('#client_name').on('keyup', function () {
         var datatype = $(this).attr('data-type');
@@ -17,7 +40,7 @@ $(document).ready(function () {
                         $('#client_name').after('<div class="searchresults"></div>')
                     }
                     $('.searchresults').css({left: $('#client_name').offset().left + 'px'});
-                    $('.searchresults').css({top: $('#client_name').offset().top + $('#client_name').height() + 3 + 'px'});
+                    $('.searchresults').css({top: $('#client_name').offset().top + $('#client_name').height() + 5 + 'px'});
 
                     var html = '';
 
@@ -32,8 +55,6 @@ $(document).ready(function () {
                 }
             });
         }
-
-
     });
 
 });

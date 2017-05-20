@@ -38,7 +38,7 @@ class Clients extends Model {
         return $row['c'];
     }
 
-    public function add($idCompany, $name, $email, $phone, $stars, $internal_obs, $address_zipcode, $address, $address_number, $address2, $address_neighb, $address_city, $address_state, $address_country) {
+    public function add($idCompany, $name, $email = '', $phone = '', $stars = 3, $internal_obs = '', $address_zipcode = '', $address = '', $address_number = '', $address2 = '', $address_neighb = '', $address_city = '', $address_state = '', $address_country = '') {
         $sql = "INSERT INTO clients SET id_company = :id_company, name = :name, email = :email,
             phone = :phone, stars = :stars, internal_obs = :internal_obs, address_zipcode = :address_zipcode,
             address = :address, address_number = :address_number, address2 = :address2,
@@ -59,6 +59,8 @@ class Clients extends Model {
         $stmt->bindParam(':address_state', $address_state);
         $stmt->bindParam(':address_country', $address_country);
         $stmt->execute();
+
+        return $this->db->lastInsertId();
     }
 
     public function edit($id, $idCompany, $name, $email, $phone, $stars, $internal_obs, $address_zipcode, $address, $address_number, $address2, $address_neighb, $address_city, $address_state, $address_country) {

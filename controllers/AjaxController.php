@@ -38,4 +38,18 @@ class AjaxController extends Controller {
         echo json_encode($data);
     }
 
+    public function add_client() {
+        $data = array();
+        $u = new Users();
+        $u->setLoggedUser();
+        $c = new Clients();
+
+        if (isset($_POST['name']) && !empty($_POST['name'])) {
+            $name = addslashes($_POST['name']);
+            $data['id'] = $c->add($u->getCompany(), $name);
+        }
+        
+        echo json_encode($data);
+    }
+
 }
