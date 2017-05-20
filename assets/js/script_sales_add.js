@@ -5,7 +5,7 @@ $(document).ready(function () {
             {reverse: true, placeholder: "0,00"});
 
 
-    // adicionando o cliente via ajax
+    // adicionando o cliente para a compra via ajax
     $('.client_add_button').on('click', function (e) {
         e.preventDefault();
 
@@ -62,6 +62,40 @@ $(document).ready(function () {
         }
     });
 
+
+    // adicionando produto para a compra via ajax [sales_add]
+    $('#add_prod').on('keyup', function () {
+        var datatype = $(this).attr('data-type');
+        var queryVal = $(this).val();
+
+        if (datatype != '') {
+            $.ajax({
+                url: BASE_URL + '/ajax/' + datatype,
+                type: 'GET',
+                data: {query: queryVal},
+                dataType: 'json',
+                success: function (json) {
+                    //criando div dos resultados
+                    if ($('.searchresults').length == 0) {
+                        $('#add_prod').after('<div class="searchresults"></div>');
+                    }
+                    $('.searchresults').css({left: $('#add_prod').offset().left + 'px'});
+                    $('.searchresults').css({top: $('#add_prod').offset().top + $('#add_prod').height() + 5 + 'px'});
+
+                    var html = '';
+
+                    for (var i in json) {
+                        html += '<div class="si"><a href="javascript:;" onclick="addProd(this)" data-id="' + json[i].id + '" data-price="' + json[i].price + '" data-name="' + json[i].name + '">'
+                                + json[i].name + ' - R$ ' + json[i].price +
+                                '</a></div>';
+                    }
+
+                    $('.searchresults').html(html);
+                    $('.searchresults').show();
+                }
+            });
+        }
+    });
 });
 
 function selectClient(obj) {
@@ -71,4 +105,35 @@ function selectClient(obj) {
     $('.searchresults').hide();
     $('#client_name').val(name);
     $('input[name=client_id]').val(id);
+}
+
+function addProd(obj) {
+    var id = $(obj).attr('data-id');
+    var price = $(obj).attr('data-price');
+    var name = $(obj).attr('data-name');
+
+    var tr = '<tr>' +
+            '<td>' + name + '</td>' +
+            '<td>' +
+            '<input type="number" name="quant[]" class="p_quant" data-price="' + price + '" onchange="updateSubTotal(this)" value="1" min="1">' +
+            '</td>' +
+            '<td>R$ ' + price + '</td>' +
+            '<td class="subtotal">R$ ' + price + '</td>' +
+            '<td><a href="javascript:;" onclick="">Excluir</a></td>' +
+            '</tr>';
+
+    $('.searchresults').hide();
+    $('#products_table').append(tr);
+}
+
+function updateSubTotal(obj) {
+    var quant = $(obj).val();
+    if (quant <= 0) {
+        $(obj).val(1);
+        quant = 1;
+    }
+    var price = $(obj).attr('data-price');
+    var subtotal = quant * price;
+
+    $(obj).closest('tr').find('.subtotal').html('R$ ' + subtotal);
 }

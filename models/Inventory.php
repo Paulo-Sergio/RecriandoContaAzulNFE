@@ -86,4 +86,20 @@ class Inventory extends Model {
         $stmt->execute();
     }
 
+    public function serchProductsByName($name, $idCompany) {
+
+        $sql = "SELECT name, price, id FROM inventory WHERE name LIKE :name AND id_company = :id_company LIMIT 10";
+        $stmt = $this->db->prepare($sql);
+        $name = '%' . $name . '%';
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':id_company', $idCompany);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            return $stmt->fetchAll();
+        }
+
+        return null;
+    }
+
 }

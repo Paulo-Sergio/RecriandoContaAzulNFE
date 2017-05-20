@@ -38,6 +38,28 @@ class AjaxController extends Controller {
         echo json_encode($data);
     }
 
+    public function search_products() {
+        // informações para definir o USER logado
+        $u = new Users();
+        $u->setLoggedUser();
+        $i = new Inventory();
+
+        if (isset($_GET['query']) && !empty($_GET['query'])) {
+            $name = addslashes($_GET['query']);
+            $products = $i->serchProductsByName($name, $u->getCompany());
+
+            foreach ($products as $pitem) {
+                $data[] = array(
+                    'name' => $pitem['name'],
+                    'id' => $pitem['id'],
+                    'price' => $pitem['price']
+                );
+            }
+        }
+        
+        echo json_encode($data);
+    }
+
     public function add_client() {
         $data = array();
         $u = new Users();
@@ -48,7 +70,7 @@ class AjaxController extends Controller {
             $name = addslashes($_POST['name']);
             $data['id'] = $c->add($u->getCompany(), $name);
         }
-        
+
         echo json_encode($data);
     }
 

@@ -263,3 +263,6 @@ table td{
 .client_add_button{
     font-size: 17px;
 }
+.p_quant{
+    width: 50px !important;
+}
