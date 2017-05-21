@@ -112,18 +112,23 @@ function addProd(obj) {
     var price = $(obj).attr('data-price');
     var name = $(obj).attr('data-name');
 
-    var tr = '<tr>' +
-            '<td>' + name + '</td>' +
-            '<td>' +
-            '<input type="number" name="quant[]" class="p_quant" data-price="' + price + '" onchange="updateSubTotal(this)" value="1" min="1">' +
-            '</td>' +
-            '<td>R$ ' + price + '</td>' +
-            '<td class="subtotal">R$ ' + price + '</td>' +
-            '<td><a href="javascript:;" onclick="">Excluir</a></td>' +
-            '</tr>';
+    if ($('input[name="quant[' + id + ']"]').length == 0) {
+        var tr = '<tr>' +
+                '<td>' + name + '</td>' +
+                '<td>' +
+                '<input type="number" name="quant[' + id + ']" class="p_quant" data-price="' + price + '" onchange="updateSubTotal(this)" value="1">' +
+                '</td>' +
+                '<td>R$ ' + price + '</td>' +
+                '<td class="subtotal">R$ ' + price + '</td>' +
+                '<td><a href="javascript:;" onclick="excluirProd(this)">Excluir</a></td>' +
+                '</tr>';
+    }
 
     $('.searchresults').hide();
+    $('#add_prod').val('');
     $('#products_table').append(tr);
+    
+    updateTotal();
 }
 
 function updateSubTotal(obj) {
@@ -136,4 +141,24 @@ function updateSubTotal(obj) {
     var subtotal = quant * price;
 
     $(obj).closest('tr').find('.subtotal').html('R$ ' + subtotal);
+
+    updateTotal();
+}
+
+function updateTotal() {
+    var total = 0;
+    for (var i = 0; i < $('.p_quant').length; i++) {
+        var quant = $('.p_quant').eq(i);
+
+        var price = quant.attr('data-price');
+        var subtotal = price * parseInt(quant.val());
+
+        total += subtotal;
+    }
+
+    $('input[name=total_price]').val(total);
+}
+
+function excluirProd(obj) {
+    $(obj).closest('tr').remove();
 }
