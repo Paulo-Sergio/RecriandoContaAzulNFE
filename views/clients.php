@@ -38,3 +38,5 @@
     <?php endfor; ?>
     <div style="clear: both"></div>
 </div>
+
+<script type="text/javascript" src="<?= BASE_URL ?>/assets/js/script_clients.js"></script>
