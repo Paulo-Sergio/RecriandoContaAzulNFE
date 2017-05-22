@@ -102,4 +102,14 @@ class Inventory extends Model {
         return null;
     }
 
+    public function decrease($idProd, $idCompany, $quantProd, $idUser) {
+        $sql = "UPDATE inventory SET quant = quant - $quantProd WHERE id = :id AND id_company = :id_company";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":id", $idProd);
+        $stmt->bindParam(":id_company", $idCompany);
+        $stmt->execute();
+
+        $this->setLog($idProd, $idCompany, $idUser, 'dwn');
+    }
+
 }

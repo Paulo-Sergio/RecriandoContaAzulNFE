@@ -127,7 +127,7 @@ function addProd(obj) {
     $('.searchresults').hide();
     $('#add_prod').val('');
     $('#products_table').append(tr);
-    
+
     updateTotal();
 }
 
@@ -156,7 +156,7 @@ function updateTotal() {
         total += subtotal;
     }
 
-    $('input[name=total_price]').val(total);
+    $('input[name=total_price]').val('R$ ' + total);
 }
 
 function excluirProd(obj) {

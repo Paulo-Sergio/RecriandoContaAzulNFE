@@ -43,7 +43,7 @@ CREATE TABLE `clients` (
   PRIMARY KEY (`id`),
   KEY `id_company_clients_fk_idx` (`id_company`),
   CONSTRAINT `id_company_clients_fk` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,7 +52,7 @@ CREATE TABLE `clients` (
 
 LOCK TABLES `clients` WRITE;
 /*!40000 ALTER TABLE `clients` DISABLE KEYS */;
-INSERT INTO `clients` VALUES (2,1,'Cliente teste','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','618','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(3,1,'Cliente teste 2','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','618','Boa Viagem','PE','Recife','Brasil','51021130',2,'cliente bom pagador 2'),(4,1,'Cliente teste 3','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','618','Boa Viagem','PE','Recife','Brasil','51021130',1,'cliente bom pagador 2'),(5,1,'Cliente teste 4','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','618','Boa Viagem','PE','Recife','Brasil','51021130',3,'cliente bom pagador 2'),(6,1,'Cliente teste 5','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','618','Boa Viagem','PE','Recife','Brasil','51021130',5,'cliente bom pagador 2'),(7,1,'Cliente teste 6','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','6346','Boa Viagem','PE','Recife','Brasil','51021130',3,'cliente bom pagador 2'),(8,1,'Cliente teste 7','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','534','Boa Viagem','PE','Recife','Brasil','51021130',2,'cliente bom pagador 2'),(9,1,'Cliente teste 8','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','634','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(10,1,'Cliente teste 9','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','523','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(11,1,'Cliente teste 10','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','6234','Boa Viagem','PE','Recife','Brasil','51021130',3,'cliente bom pagador 2'),(12,1,'Cliente teste 11','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','6234','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(13,1,'Cliente teste 12','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','0890','Boa Viagem','PE','Recife','Brasil','51021130',5,'cliente bom pagador 2'),(14,1,'Cliente teste 13','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','67','Boa Viagem','PE','Recife','Brasil','51021130',2,'cliente bom pagador 2'),(15,1,'Cliente teste 14','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','45','Boa Viagem','PE','Recife','Brasil','51021130',2,'cliente bom pagador 2'),(16,1,'Cliente teste 15','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','64','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(17,1,'Cliente teste 16','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','47','Boa Viagem','PE','Recife','Brasil','51021130',3,'cliente bom pagador 2'),(18,1,'Cliente teste 17','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','567','Boa Viagem','PE','Recife','Brasil','51021130',5,'cliente bom pagador 2'),(19,1,'Cliente teste 18','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','5247','Boa Viagem','PE','Recife','Brasil','51021130',3,'cliente bom pagador 2'),(20,1,'Cliente teste 19','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','3','Boa Viagem','PE','Recife','Brasil','51021130',5,'cliente bom pagador 2'),(21,1,'Cliente teste 20','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','652','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(22,1,'Cliente teste 21','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','658','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(23,1,'Cliente teste 22','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','98','Boa Viagem','PE','Recife','Brasil','51021130',5,'cliente bom pagador 2'),(24,1,'Cliente teste 23','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','897','Boa Viagem','PE','Recife','Brasil','51021130',3,'cliente bom pagador 2'),(25,1,'Cliente teste 24','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','745','Boa Viagem','PE','Recife','Brasil','51021130',2,'cliente bom pagador 2'),(26,1,'Cliente teste 25','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','76','Boa Viagem','PE','Recife','Brasil','51021130',1,'cliente bom pagador 2');
+INSERT INTO `clients` VALUES (2,1,'Cliente teste','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','618','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(3,1,'Miguel','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','618','Boa Viagem','PE','Recife','Brasil','51021130',2,'cliente bom pagador 2'),(4,1,'Bernardo','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','618','Boa Viagem','PE','Recife','Brasil','51021130',1,'cliente bom pagador 2'),(5,1,'Valentina','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','618','Boa Viagem','PE','Recife','Brasil','51021130',3,'cliente bom pagador 2'),(6,1,'Maria Luiza','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','618','Boa Viagem','PE','Recife','Brasil','51021130',5,'cliente bom pagador 2'),(7,1,'Guilherme','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','6346','Boa Viagem','PE','Recife','Brasil','51021130',3,'cliente bom pagador 2'),(8,1,'João Pedro','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','534','Boa Viagem','PE','Recife','Brasil','51021130',2,'cliente bom pagador 2'),(9,1,'Gustavo Teste','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','634','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(10,1,'Ana Clara','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','523','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(11,1,'Enzo Gabriel','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','6234','Boa Viagem','PE','Recife','Brasil','51021130',3,'cliente bom pagador 2'),(12,1,'Isadora','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','6234','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(13,1,'Pedro Henrique','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','0890','Boa Viagem','PE','Recife','Brasil','51021130',5,'cliente bom pagador 2'),(14,1,'Ana Luiza','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','67','Boa Viagem','PE','Recife','Brasil','51021130',2,'cliente bom pagador 2'),(15,1,'Davi Lucca','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','45','Boa Viagem','PE','Recife','Brasil','51021130',2,'cliente bom pagador 2'),(16,1,'Maria Cecília','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','64','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(17,1,'João Guilherme','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','47','Boa Viagem','PE','Recife','Brasil','51021130',3,'cliente bom pagador 2'),(18,1,'Maria Fernanda','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','567','Boa Viagem','PE','Recife','Brasil','51021130',5,'cliente bom pagador 2'),(19,1,'Emilly','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','5247','Boa Viagem','PE','Recife','Brasil','51021130',3,'cliente bom pagador 2'),(20,1,'Vitor Hugo','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','3','Boa Viagem','PE','Recife','Brasil','51021130',5,'cliente bom pagador 2'),(21,1,'Pietra','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','652','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(22,1,'Fernanda','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','658','Boa Viagem','PE','Recife','Brasil','51021130',4,'cliente bom pagador 2'),(23,1,'Luiz Felipe','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','98','Boa Viagem','PE','Recife','Brasil','51021130',5,'cliente bom pagador 2'),(24,1,'Davi Luiz','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','897','Boa Viagem','PE','Recife','Brasil','51021130',3,'cliente bom pagador 2'),(25,1,'Carlos Eduardo','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','745','Boa Viagem','PE','Recife','Brasil','51021130',2,'cliente bom pagador 2'),(26,1,'Mirella','cliente2@hotmail.com','81 988824977','Rua Coronel Anízio Rodrigues Coelho','apt 2804','76','Boa Viagem','PE','Recife','Brasil','51021130',1,'cliente bom pagador 2'),(27,1,'Luiz Henrique','','','','','','','','','','',3,''),(28,1,'Paulo França','paulofranca.contato@gmail.com','81 988824977','Rua Rosa Amelia da Paz','apt 203','251','Piedade','PE','Jaboatão dos Guararapes','Brasil','54410-315',5,'Eu como cliente');
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +97,7 @@ CREATE TABLE `inventory` (
   PRIMARY KEY (`id`),
   KEY `id_company_inventory_fk_idx` (`id_company`),
   CONSTRAINT `id_company_inventory_fk` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,7 +106,7 @@ CREATE TABLE `inventory` (
 
 LOCK TABLES `inventory` WRITE;
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
-INSERT INTO `inventory` VALUES (1,1,'Produto de Teste',150.25,10,15),(2,1,'Outro Produto',58.6,15,12),(3,1,'Produto novo [editado]',1500,12,12),(4,1,'teste2',15555.5,5,10);
+INSERT INTO `inventory` VALUES (1,1,'Produto de Teste',150.25,10,15),(2,1,'Outro Produto',58.6,11,12),(3,1,'Produto novo [editado]',1500,12,12),(4,1,'teste2',15555.5,5,10),(5,1,'Produto de Limpeza',5.95,92,10);
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,7 +131,7 @@ CREATE TABLE `inventory_history` (
   CONSTRAINT `id_company_inventory_history_fk` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `id_product_inventory_history_fk` FOREIGN KEY (`id_product`) REFERENCES `inventory` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `id_user_inventory_history_fk` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -140,7 +140,7 @@ CREATE TABLE `inventory_history` (
 
 LOCK TABLES `inventory_history` WRITE;
 /*!40000 ALTER TABLE `inventory_history` DISABLE KEYS */;
-INSERT INTO `inventory_history` VALUES (1,1,1,1,'add','2017-05-19 09:25:17'),(2,1,2,1,'add','2017-05-19 09:25:40'),(3,1,3,1,'add','2017-05-19 10:37:23'),(4,1,4,1,'add','2017-05-19 11:23:28'),(7,1,4,1,'edt','2017-05-19 11:29:41'),(8,1,4,1,'edt','2017-05-19 11:30:30'),(9,1,4,1,'edt','2017-05-19 11:30:38'),(15,1,4,1,'edt','2017-05-19 17:15:09');
+INSERT INTO `inventory_history` VALUES (1,1,1,1,'add','2017-05-19 09:25:17'),(2,1,2,1,'add','2017-05-19 09:25:40'),(3,1,3,1,'add','2017-05-19 10:37:23'),(4,1,4,1,'add','2017-05-19 11:23:28'),(7,1,4,1,'edt','2017-05-19 11:29:41'),(8,1,4,1,'edt','2017-05-19 11:30:30'),(9,1,4,1,'edt','2017-05-19 11:30:38'),(15,1,4,1,'edt','2017-05-19 17:15:09'),(16,1,5,1,'add','2017-05-22 16:48:52'),(17,1,5,1,'dwn','2017-05-22 17:16:07'),(18,1,2,1,'dwn','2017-05-22 17:16:07'),(19,1,2,1,'dwn','2017-05-22 17:16:41');
 /*!40000 ALTER TABLE `inventory_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,7 +168,7 @@ CREATE TABLE `permission_groups` (
 
 LOCK TABLES `permission_groups` WRITE;
 /*!40000 ALTER TABLE `permission_groups` DISABLE KEYS */;
-INSERT INTO `permission_groups` VALUES (1,1,'Desenvolvedores','1,2,6,7,8,9,10,11,12'),(5,2,'Grupo de teste 3','1,2,3,4'),(6,1,'Group of test','5');
+INSERT INTO `permission_groups` VALUES (1,1,'Desenvolvedores','1,2,6,7,8,9,10,11,12,13'),(5,2,'Grupo de teste 3','1,2,3,4'),(6,1,'Group of test','5');
 /*!40000 ALTER TABLE `permission_groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -282,7 +282,7 @@ CREATE TABLE `sales` (
   CONSTRAINT `id_client_sales_fk` FOREIGN KEY (`id_client`) REFERENCES `clients` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `id_company_sales_fk` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `id_user_sales_fk` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -291,6 +291,7 @@ CREATE TABLE `sales` (
 
 LOCK TABLES `sales` WRITE;
 /*!40000 ALTER TABLE `sales` DISABLE KEYS */;
+INSERT INTO `sales` VALUES (1,1,27,1,'2017-05-20 12:01:26',125.3,1),(2,1,7,1,'2017-05-20 12:02:16',564,0),(9,1,9,1,'2017-05-22 16:47:47',267.45,0),(10,1,9,1,'2017-05-22 16:49:13',59.5,1),(13,1,14,1,'2017-05-22 17:16:06',223.4,1),(14,1,11,1,'2017-05-22 17:16:40',58.6,1);
 /*!40000 ALTER TABLE `sales` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -304,18 +305,18 @@ DROP TABLE IF EXISTS `sales_products`;
 CREATE TABLE `sales_products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_company` int(11) NOT NULL,
-  `id_sales` int(11) NOT NULL,
+  `id_sale` int(11) NOT NULL,
   `id_product` int(11) NOT NULL,
   `quant` int(11) NOT NULL,
   `sale_price` float NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_sales_sales_products_fk_idx` (`id_sales`),
+  KEY `id_sales_sales_products_fk_idx` (`id_sale`),
   KEY `id_product_sales_products_fk_idx` (`id_product`),
   KEY `id_company_sales_products_fk_idx` (`id_company`),
   CONSTRAINT `id_company_sales_products_fk` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `id_product_sales_products_fk` FOREIGN KEY (`id_product`) REFERENCES `inventory` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `id_sales_sales_products_fk` FOREIGN KEY (`id_sales`) REFERENCES `sales` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `id_sales_sales_products_fk` FOREIGN KEY (`id_sale`) REFERENCES `sales` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -324,6 +325,7 @@ CREATE TABLE `sales_products` (
 
 LOCK TABLES `sales_products` WRITE;
 /*!40000 ALTER TABLE `sales_products` DISABLE KEYS */;
+INSERT INTO `sales_products` VALUES (1,1,9,1,1,150.25),(2,1,9,2,2,58.6),(3,1,10,5,10,5.95),(6,1,13,5,8,5.95),(7,1,13,2,3,58.6),(8,1,14,2,1,58.6);
 /*!40000 ALTER TABLE `sales_products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -371,4 +373,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-19 18:06:05
+-- Dump completed on 2017-05-22 17:29:10
