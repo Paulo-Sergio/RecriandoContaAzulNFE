@@ -161,4 +161,5 @@ function updateTotal() {
 
 function excluirProd(obj) {
     $(obj).closest('tr').remove();
+    updateTotal();
 }
