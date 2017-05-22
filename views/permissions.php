@@ -44,3 +44,5 @@
         </table>
     </div>
 </div>
+
+<script type="text/javascript" src="<?= BASE_URL ?>/assets/js/script_permissions.js"></script>
