@@ -25,6 +25,8 @@
                     <li><a href="<?= BASE_URL ?>/clients">Clientes</a></li>
                     <li><a href="<?= BASE_URL ?>/inventory">Estoque</a></li>
                     <li><a href="<?= BASE_URL ?>/sales">Vendas</a></li>
+                    <li><a href="<?= BASE_URL ?>/purchases">Compras</a></li>
+                    <li><a href="<?= BASE_URL ?>/report">Relatórios</a></li>
                 </ul>
             </div>
         </div>
