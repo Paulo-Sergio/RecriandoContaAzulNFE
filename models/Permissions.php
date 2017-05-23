@@ -18,24 +18,27 @@ class Permissions extends Model {
 
         if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch();
-
-            // consultando esses 'params' para saber quais os nomes
-            // e no final adicionar cada nome ao array de $this->permissions
             if (empty($row['params'])) {
                 $row['params'] = '0';
             }
             $params = $row['params'];
 
-            $sql = "SELECT name FROM permission_params WHERE id IN ($params) AND id_company = :id_company";
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':id_company', $id_company);
-            $stmt->execute();
+            /** consultando esses 'params' para saber quais os nomes
+              e no final adicionar cada nome ao array de $this->permissions * */
+            $this->searchingNameOfParameters($params, $id_company);
+        }
+    }
 
-            if ($stmt->rowCount() > 0) {
-                $p = $stmt->fetchAll();
-                foreach ($p as $item) {
-                    $this->permissions[] = $item['name'];
-                }
+    private function searchingNameOfParameters($params, $id_company) {
+        $sql = "SELECT name FROM permission_params WHERE id IN ($params) AND id_company = :id_company";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_company', $id_company);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $p = $stmt->fetchAll();
+            foreach ($p as $item) {
+                $this->permissions[] = $item['name'];
             }
         }
     }
