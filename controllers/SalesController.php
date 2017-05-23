@@ -81,20 +81,24 @@ class SalesController extends Controller {
         $data['company_name'] = $company->getName();
         $data['user_email'] = $u->getEmail();
 
+        $data['statuser'] = array(
+            '0' => 'Aguardando Pagamento',
+            '1' => 'Pago',
+            '2' => 'Cancelado'
+        );
+
         if ($u->hasPermission('sales_view')) {
             $s = new Sales();
+            $data['sales_info'] = $s->getInfo($id, $u->getCompany());
+            $data['permission_edit'] = $u->hasPermission('sales_edit');
 
-            if (isset($_POST['client_id']) && !empty($_POST['client_id'])) {
-                $clientId = addslashes($_POST['client_id']);
+            if (isset($_POST['status']) && $data['permission_edit']) {
                 $status = addslashes($_POST['status']);
-                $productsQuant = $_POST['quant'];
 
-                $s->add($u->getCompany(), $clientId, $u->getId(), $productsQuant, $status);
+                $s->changeStatus($id, $status, $u->getCompany());
                 header("Location: " . BASE_URL . "/sales");
                 exit();
             }
-            
-            $data['sales_info'] = $s->getInfo($id, $u->getCompany());
 
             $this->loadTemplate('sales_edit', $data);
         } else {

@@ -132,5 +132,14 @@ class Sales extends Model {
         }
         return $totalPrice;
     }
+    
+    public function changeStatus($id, $status, $idCompany) {
+        $sql = "UPDATE sales SET status = :status WHERE id = :id AND id_company = :id_company";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':id_company', $idCompany);
+        $stmt->execute();
+    }
 
 }
