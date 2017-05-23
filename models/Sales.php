@@ -19,6 +19,44 @@ class Sales extends Model {
         return null;
     }
 
+    public function getInfo($id, $idCompany) {
+        $array = array();
+
+        $sql = "SELECT s.*, c.name as client_name "
+                . "FROM sales s "
+                . "INNER JOIN clients c ON s.id_client = c.id "
+                . "WHERE s.id = :id AND s.id_company = :id_company";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':id_company', $idCompany);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            // pegando informação da venda
+            $array['info'] = $stmt->fetch();
+        }
+
+        // pegando produtos da venda[sale]
+        $array['products'] = $this->getProductsOfSales($id, $idCompany);
+
+
+        return $array;
+    }
+
+    private function getProductsOfSales($idSale, $idCompany) {
+        $sql = "SELECT sp.quant, sp.sale_price, i.name "
+                . "FROM sales_products sp "
+                . "INNER JOIN inventory i ON sp.id_product = i.id "
+                . "WHERE sp.id_sale = :id_sale AND sp.id_company = :id_company";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_sale', $idSale);
+        $stmt->bindParam(':id_company', $idCompany);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            return $stmt->fetchAll();
+        }
+    }
+
     public function add($idCompany, $clientId, $userId, $productsQuant, $status) {
         $totalPrice = 0;
 

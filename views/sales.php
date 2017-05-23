@@ -8,7 +8,7 @@
         <th>Data</th>
         <th>Status</th>
         <th>Valor</th>
-        <th width="160">Ações</th>
+        <th width="75">Ações</th>
     </tr>
     <?php foreach ($sales_list as $sale_item): ?>
         <tr>
@@ -17,8 +17,7 @@
             <td><?= $statuser[$sale_item['status']] ?></td>
             <td>R$ <?= number_format($sale_item['total_price'], 2, ',', '.') ?></td>
             <td>
-                <a class="button button_small" href="<?= BASE_URL ?>/users/edit/<?= $sale_item['id'] ?>">Editar</a>
-                <a class="button button_small" href="<?= BASE_URL ?>/users/delete/<?= $sale_item['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir ?')">Excluir</a>
+                <a class="button button_small" href="<?= BASE_URL ?>/sales/edit/<?= $sale_item['id'] ?>">Editar</a>
             </td>
         </tr>
     <?php endforeach; ?>

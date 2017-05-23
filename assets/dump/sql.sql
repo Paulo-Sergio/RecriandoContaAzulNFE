@@ -15,6 +15,10 @@ DELETE FROM inventory WHERE id = 4 AND id_company = 1;
 select * from sales where id_company = 1;
 select * from sales_products where id_company = 1;
 
-SELECT s.id, s.date_sale, s.total_price, s.status, c.name FROM sales s 
-INNER JOIN clients c ON s.id_client = c.id
+SELECT s.id, s.date_sale, s.total_price, s.status, c.name 
+FROM sales s INNER JOIN clients c ON s.id_client = c.id
 WHERE s.id_company = "1" ORDER BY s.date_sale DESC LIMIT 0, 10;
+
+SELECT s.*, c.name as client_name 
+FROM sales s INNER JOIN clients c ON s.id_client = c.id
+WHERE s.id = 1;
