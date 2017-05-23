@@ -132,7 +132,7 @@ class Sales extends Model {
         }
         return $totalPrice;
     }
-    
+
     public function changeStatus($id, $status, $idCompany) {
         $sql = "UPDATE sales SET status = :status WHERE id = :id AND id_company = :id_company";
         $stmt = $this->db->prepare($sql);
@@ -140,6 +140,62 @@ class Sales extends Model {
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':id_company', $idCompany);
         $stmt->execute();
+    }
+
+    public function getSalesFiltered($clientName, $period1, $period2, $status, $order, $idCompany) {
+        $sql = "SELECT clients.name, sales.date_sale, sales.status, sales.total_price "
+                . "FROM sales "
+                . "INNER JOIN clients "
+                . "ON sales.id_client = clients.id "
+                . "WHERE ";
+
+        $where = array();
+        $where[] = "sales.id_company = :id_company";
+
+        if (!empty($clientName)) {
+            $where[] = "clients.name LIKE '%" . $clientName . "%'";
+        }
+
+        if (!empty($period1) && !empty($period2)) {
+            $where[] = "sales.date_sale BETWEEN :period1 AND :period2";
+        }
+
+        if ($status != '') {
+            $where[] = "sales.status = :status";
+        }
+
+        $sql .= implode(' AND ', $where);
+
+        switch ($order) {
+            case 'date_desc':
+                $sql .= ' ORDER BY sales.date_sale DESC';
+                break;
+            case 'date_asc':
+                $sql .= ' ORDER BY sales.date_sale ASC';
+                break;
+            case 'status':
+                $sql .= ' ORDER BY sales.status ASC';
+                break;
+            default:
+                $sql .= ' ORDER BY sales.date_sale DESC';
+                break;
+        }
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_company', $idCompany);
+        if (!empty($period1) && !empty($period2)) {
+            $stmt->bindParam(':period1', $period1);
+            $stmt->bindParam(':period2', $period2);
+        }
+        if ($status != '') {
+            $stmt->bindParam(':status', $status);
+        }
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            return $stmt->fetchAll();
+        }
+        return null;
     }
 
 }

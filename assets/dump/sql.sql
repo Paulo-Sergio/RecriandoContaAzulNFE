@@ -21,4 +21,4 @@ WHERE s.id_company = "1" ORDER BY s.date_sale DESC LIMIT 0, 10;
 
 SELECT s.*, c.name as client_name 
 FROM sales s INNER JOIN clients c ON s.id_client = c.id
-WHERE s.id = 1;
+WHERE s.id = 13;
