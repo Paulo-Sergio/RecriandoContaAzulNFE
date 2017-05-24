@@ -142,6 +142,56 @@ class Sales extends Model {
         $stmt->execute();
     }
 
+    public function getTotalRevenue($period1, $period2, $idCompany) {
+        $sql = "SELECT SUM(total_price) AS total "
+                . "FROM sales "
+                . "WHERE id_company = :id_company "
+                . "AND date_sale BETWEEN :period1 AND :period2";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_company', $idCompany);
+        $stmt->bindParam(':period1', $period1);
+        $stmt->bindParam(':period2', $period2);
+        $stmt->execute();
+
+        $row = $stmt->fetch();
+        $result = $row['total'];
+
+        return floatval($result);
+    }
+
+    public function getSoldProducts($period1, $period2, $idCompany) {
+        $sql = "SELECT id "
+                . "FROM sales "
+                . "WHERE id_company = :id_company "
+                . "AND date_sale BETWEEN :period1 AND :period2";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_company', $idCompany);
+        $stmt->bindParam(':period1', $period1);
+        $stmt->bindParam(':period2', $period2);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $id = array();
+            foreach ($stmt->fetchAll() as $saleItem) {
+                // pegando todos os id's das vendas[sales]
+                $id[] = $saleItem['id'];
+            }
+
+            // com os id's das vendas eu vejo quantos produtos foram vendidos
+            return $this->getProductByIdSales($id);
+        }
+
+        return null;
+    }
+
+    private function getProductByIdSales($idSale) {
+        $sql = "SELECT COUNT(*) AS total FROM sales_products WHERE id_sale IN (" . implode(',', $idSale) . ")";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetch()['total'];
+    }
+
     public function getSalesFiltered($clientName, $period1, $period2, $status, $order, $idCompany) {
         $sql = "SELECT clients.name, sales.date_sale, sales.status, sales.total_price "
                 . "FROM sales "
