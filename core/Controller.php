@@ -1,8 +1,9 @@
 <?php
 
 class Controller {
-    
+
     public function __construct() {
+        
     }
 
     public function loadView($viewName, $viewData = array()) {
@@ -22,6 +23,12 @@ class Controller {
     public function loadViewInTemplate($viewName, $viewData = array()) {
         extract($viewData);
         include './views/' . $viewName . '.php';
+    }
+
+    public function loadLibrary($lib) {
+        if (file_exists('vendor/' . $lib . '.php')) {
+            include 'vendor/' . $lib . '.php';
+        }
     }
 
 }

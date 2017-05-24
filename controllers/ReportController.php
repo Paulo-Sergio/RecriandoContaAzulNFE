@@ -29,7 +29,7 @@ class ReportController extends Controller {
             exit();
         }
     }
-    
+
     public function sales() {
         $data = array();
 
@@ -47,7 +47,7 @@ class ReportController extends Controller {
         );
 
         if ($u->hasPermission('report_view')) {
-            
+
 
             $this->loadTemplate('report_sales', $data);
         } else {
@@ -55,7 +55,7 @@ class ReportController extends Controller {
             exit();
         }
     }
-    
+
     public function sales_pdf() {
         $data = array();
         $u = new Users();
@@ -73,13 +73,24 @@ class ReportController extends Controller {
             $period2 = addslashes($_GET['period2']);
             $status = addslashes($_GET['status']);
             $order = addslashes($_GET['order']);
-            
+
             $s = new Sales();
             $data['sales_list'] = $s->getSalesFiltered($client_name, $period1, $period2, $status, $order, $u->getCompany());
-            
+
             $data['filters'] = $_GET;
 
+            // carregando biblioteca para geração do pdf
+            $this->loadLibrary('mpdf60/mpdf');
+
+            ob_start(); // iniciando buffer [armazenando na memoria o que era pra ser carregado na view]
             $this->loadView('report_sales_pdf', $data);
+            $html = ob_get_contents(); // pegando tudo armazenado no buffer e colocando na variavel $html
+            ob_end_clean(); // zerando a memoria quanto a este processo
+            
+            // escrevendo todo html para o pdf e gerando um saída
+            $mpdf = new mPDF();
+            $mpdf->WriteHTML($html);
+            $mpdf->Output();
         } else {
             header("Location: " . BASE_URL);
             exit();
