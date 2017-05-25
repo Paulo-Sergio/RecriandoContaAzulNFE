@@ -106,7 +106,7 @@ CREATE TABLE `inventory` (
 
 LOCK TABLES `inventory` WRITE;
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
-INSERT INTO `inventory` VALUES (1,1,'Produto de Teste',150.25,10,15),(2,1,'Outro Produto',58.6,11,12),(3,1,'Produto novo [editado]',1500,12,12),(4,1,'teste2',15555.5,5,10),(5,1,'Produto de Limpeza',5.95,92,10);
+INSERT INTO `inventory` VALUES (1,1,'Produto de Teste',150.25,10,15),(2,1,'Outro Produto',58.6,11,12),(3,1,'Produto novo [editado]',1500,12,12),(4,1,'teste2',15555.5,5,10),(5,1,'Produto de Limpeza',5.95,84,10);
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,7 +131,7 @@ CREATE TABLE `inventory_history` (
   CONSTRAINT `id_company_inventory_history_fk` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `id_product_inventory_history_fk` FOREIGN KEY (`id_product`) REFERENCES `inventory` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `id_user_inventory_history_fk` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -140,7 +140,7 @@ CREATE TABLE `inventory_history` (
 
 LOCK TABLES `inventory_history` WRITE;
 /*!40000 ALTER TABLE `inventory_history` DISABLE KEYS */;
-INSERT INTO `inventory_history` VALUES (1,1,1,1,'add','2017-05-19 09:25:17'),(2,1,2,1,'add','2017-05-19 09:25:40'),(3,1,3,1,'add','2017-05-19 10:37:23'),(4,1,4,1,'add','2017-05-19 11:23:28'),(7,1,4,1,'edt','2017-05-19 11:29:41'),(8,1,4,1,'edt','2017-05-19 11:30:30'),(9,1,4,1,'edt','2017-05-19 11:30:38'),(15,1,4,1,'edt','2017-05-19 17:15:09'),(16,1,5,1,'add','2017-05-22 16:48:52'),(17,1,5,1,'dwn','2017-05-22 17:16:07'),(18,1,2,1,'dwn','2017-05-22 17:16:07'),(19,1,2,1,'dwn','2017-05-22 17:16:41');
+INSERT INTO `inventory_history` VALUES (1,1,1,1,'add','2017-05-19 09:25:17'),(2,1,2,1,'add','2017-05-19 09:25:40'),(3,1,3,1,'add','2017-05-19 10:37:23'),(4,1,4,1,'add','2017-05-19 11:23:28'),(7,1,4,1,'edt','2017-05-19 11:29:41'),(8,1,4,1,'edt','2017-05-19 11:30:30'),(9,1,4,1,'edt','2017-05-19 11:30:38'),(15,1,4,1,'edt','2017-05-19 17:15:09'),(16,1,5,1,'add','2017-05-22 16:48:52'),(17,1,5,1,'dwn','2017-05-22 17:16:07'),(18,1,2,1,'dwn','2017-05-22 17:16:07'),(19,1,2,1,'dwn','2017-05-22 17:16:41'),(20,1,5,1,'dwn','2017-05-24 16:03:42');
 /*!40000 ALTER TABLE `inventory_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,7 +168,7 @@ CREATE TABLE `permission_groups` (
 
 LOCK TABLES `permission_groups` WRITE;
 /*!40000 ALTER TABLE `permission_groups` DISABLE KEYS */;
-INSERT INTO `permission_groups` VALUES (1,1,'Desenvolvedores','1,2,6,7,8,9,10,11,12,13'),(5,2,'Grupo de teste 3','1,2,3,4'),(6,1,'Group of test','5');
+INSERT INTO `permission_groups` VALUES (1,1,'Desenvolvedores','1,2,6,7,8,9,10,11,12,13,15'),(5,2,'Grupo de teste 3','1,2,3,4'),(6,1,'Group of test','1,2');
 /*!40000 ALTER TABLE `permission_groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,7 +186,7 @@ CREATE TABLE `permission_params` (
   PRIMARY KEY (`id`),
   KEY `id_company_permission_params_fk_idx` (`id_company`),
   CONSTRAINT `id_company_permission_params_fk` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -195,7 +195,7 @@ CREATE TABLE `permission_params` (
 
 LOCK TABLES `permission_params` WRITE;
 /*!40000 ALTER TABLE `permission_params` DISABLE KEYS */;
-INSERT INTO `permission_params` VALUES (1,1,'logout'),(2,1,'permissions_view'),(3,2,'permissions_view'),(4,2,'permission_usuarios_ex'),(6,1,'users_view'),(7,1,'clients_view'),(8,1,'clients_edit'),(9,1,'inventory_view'),(10,1,'inventory_add'),(11,1,'inventory_edit'),(12,1,'sales_view');
+INSERT INTO `permission_params` VALUES (1,1,'logout'),(2,1,'permissions_view'),(3,2,'permissions_view'),(4,2,'permission_usuarios_ex'),(6,1,'users_view'),(7,1,'clients_view'),(8,1,'clients_edit'),(9,1,'inventory_view'),(10,1,'inventory_add'),(11,1,'inventory_edit'),(12,1,'sales_view'),(13,1,'sales_edit'),(15,1,'report_view');
 /*!40000 ALTER TABLE `permission_params` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,7 +210,7 @@ CREATE TABLE `purchases` (
   `id` int(11) NOT NULL,
   `id_company` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `date` datetime NOT NULL,
+  `date_purchase` datetime NOT NULL,
   `total_price` float NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_user_purchases_pk_idx` (`id_user`),
@@ -282,7 +282,7 @@ CREATE TABLE `sales` (
   CONSTRAINT `id_client_sales_fk` FOREIGN KEY (`id_client`) REFERENCES `clients` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `id_company_sales_fk` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `id_user_sales_fk` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -291,7 +291,7 @@ CREATE TABLE `sales` (
 
 LOCK TABLES `sales` WRITE;
 /*!40000 ALTER TABLE `sales` DISABLE KEYS */;
-INSERT INTO `sales` VALUES (1,1,27,1,'2017-05-20 12:01:26',125.3,1),(2,1,7,1,'2017-05-20 12:02:16',564,0),(9,1,9,1,'2017-05-22 16:47:47',267.45,0),(10,1,9,1,'2017-05-22 16:49:13',59.5,1),(13,1,14,1,'2017-05-22 17:16:06',223.4,1),(14,1,11,1,'2017-05-22 17:16:40',58.6,1);
+INSERT INTO `sales` VALUES (9,1,9,1,'2017-05-22 16:47:47',267.45,0),(10,1,9,1,'2017-05-22 16:49:13',59.5,1),(13,1,14,1,'2017-05-22 17:16:06',223.4,2),(14,1,11,1,'2017-05-22 17:16:40',58.6,1),(15,1,28,1,'2017-05-24 16:03:42',47.6,1);
 /*!40000 ALTER TABLE `sales` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -316,7 +316,7 @@ CREATE TABLE `sales_products` (
   CONSTRAINT `id_company_sales_products_fk` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `id_product_sales_products_fk` FOREIGN KEY (`id_product`) REFERENCES `inventory` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `id_sales_sales_products_fk` FOREIGN KEY (`id_sale`) REFERENCES `sales` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -325,7 +325,7 @@ CREATE TABLE `sales_products` (
 
 LOCK TABLES `sales_products` WRITE;
 /*!40000 ALTER TABLE `sales_products` DISABLE KEYS */;
-INSERT INTO `sales_products` VALUES (1,1,9,1,1,150.25),(2,1,9,2,2,58.6),(3,1,10,5,10,5.95),(6,1,13,5,8,5.95),(7,1,13,2,3,58.6),(8,1,14,2,1,58.6);
+INSERT INTO `sales_products` VALUES (1,1,9,1,1,150.25),(2,1,9,2,2,58.6),(3,1,10,5,10,5.95),(6,1,13,5,8,5.95),(7,1,13,2,3,58.6),(8,1,14,2,1,58.6),(9,1,15,5,8,5.95);
 /*!40000 ALTER TABLE `sales_products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -373,4 +373,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-22 17:29:10
+-- Dump completed on 2017-05-24 18:05:55
