@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Painel - <?= $viewData['company_name'] ?></title>
+        <title>Painel - <?= $viewData['info_template']['company_name'] ?></title>
         <link href="<?= BASE_URL ?>/assets/css/template.css" rel="stylesheet"/>
         <script type="text/javascript" src="<?= BASE_URL ?>/assets/js/jquery-1.7.1.min.js"></script>
         <script type="text/javascript">
@@ -14,7 +14,7 @@
 
         <div class="leftmenu">
             <div class="company_name">
-                <?= $viewData['company_name'] ?>
+                <?= $viewData['info_template']['company_name'] ?>
             </div>
 
             <div class="menuarea">
@@ -35,7 +35,7 @@
         <div class="container">
             <div class="top">
                 <div class="top_right"><a href="<?= BASE_URL ?>/login/logout">Sair</a></div>
-                <div class="top_right"><?= $viewData['user_email'] ?></div>
+                <div class="top_right"><?= $viewData['info_template']['user_email'] ?></div>
             </div>
 
             <div class="area">

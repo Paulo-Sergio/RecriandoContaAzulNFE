@@ -2,27 +2,24 @@
 
 class ClientsController extends Controller {
 
+    private $user;
+
     public function __construct() {
         parent::__construct();
 
-        $u = new Users();
-        if (!$u->isLogged()) {
+        $this->user = new Users();
+        if (!$this->user->isLogged()) {
             header("Location: " . BASE_URL . "/login");
             exit();
         }
+        
+        $this->user->setLoggedUser();
     }
 
     public function index() {
-        $data = array();
-
         // informações para o template
-        $u = new Users();
-        $u->setLoggedUser();
-        $company = new Companies($u->getCompany());
-        $data['company_name'] = $company->getName();
-        $data['user_email'] = $u->getEmail();
-
-        if ($u->hasPermission('clients_view')) {
+        $data['info_template'] = Utilities::loadTemplateBaseInfo($this->user);
+        if ($this->user->hasPermission('clients_view')) {
             $c = new Clients();
             $offset = 0;
 
@@ -36,11 +33,11 @@ class ClientsController extends Controller {
             }
             $offset = (10 * ($data['p'] - 1));
 
-            $data['clients_list'] = $c->getList($offset, $u->getCompany());
-            $data['clients_count'] = $c->getCount($u->getCompany());
+            $data['clients_list'] = $c->getList($offset, $this->user->getCompany());
+            $data['clients_count'] = $c->getCount($this->user->getCompany());
             $data['p_count'] = ceil($data['clients_count'] / 10); //sempre arredonda pra cima
             // verificando permissão
-            $data['edit_permission'] = $u->hasPermission('clients_edit');
+            $data['edit_permission'] = $this->user->hasPermission('clients_edit');
 
             $this->loadTemplate('clients', $data);
         } else {
@@ -50,16 +47,9 @@ class ClientsController extends Controller {
     }
 
     public function add() {
-        $data = array();
-
         // informações para o template
-        $u = new Users();
-        $u->setLoggedUser();
-        $company = new Companies($u->getCompany());
-        $data['company_name'] = $company->getName();
-        $data['user_email'] = $u->getEmail();
-
-        if ($u->hasPermission('clients_edit')) {
+        $data['info_template'] = Utilities::loadTemplateBaseInfo($this->user);
+        if ($this->user->hasPermission('clients_edit')) {
             $c = new Clients();
 
             if (isset($_POST['name']) && !empty($_POST['name'])) {
@@ -77,7 +67,7 @@ class ClientsController extends Controller {
                 $address_state = addslashes($_POST['address_state']);
                 $address_country = addslashes($_POST['address_country']);
 
-                $c->add($u->getCompany(), $name, $email, $phone, $stars, $internal_obs, $address_zipcode, $address, $address_number, $address2, $address_neighb, $address_city, $address_state, $address_country);
+                $c->add($this->user->getCompany(), $name, $email, $phone, $stars, $internal_obs, $address_zipcode, $address, $address_number, $address2, $address_neighb, $address_city, $address_state, $address_country);
                 header("Location: " . BASE_URL . "/clients");
             }
 
@@ -89,16 +79,9 @@ class ClientsController extends Controller {
     }
 
     public function edit($id) {
-        $data = array();
-
         // informações para o template
-        $u = new Users();
-        $u->setLoggedUser();
-        $company = new Companies($u->getCompany());
-        $data['company_name'] = $company->getName();
-        $data['user_email'] = $u->getEmail();
-
-        if ($u->hasPermission('clients_edit')) {
+        $data['info_template'] = Utilities::loadTemplateBaseInfo($this->user);
+        if ($this->user->hasPermission('clients_edit')) {
             $c = new Clients();
 
             if (isset($_POST['name']) && !empty($_POST['name'])) {
@@ -116,12 +99,12 @@ class ClientsController extends Controller {
                 $address_state = addslashes($_POST['address_state']);
                 $address_country = addslashes($_POST['address_country']);
 
-                $c->edit($id, $u->getCompany(), $name, $email, $phone, $stars, $internal_obs, $address_zipcode, $address, $address_number, $address2, $address_neighb, $address_city, $address_state, $address_country);
+                $c->edit($id, $this->user->getCompany(), $name, $email, $phone, $stars, $internal_obs, $address_zipcode, $address, $address_number, $address2, $address_neighb, $address_city, $address_state, $address_country);
                 header("Location: " . BASE_URL . "/clients");
                 exit();
             }
 
-            $data['client_info'] = $c->getInfo($id, $u->getCompany());
+            $data['client_info'] = $c->getInfo($id, $this->user->getCompany());
 
             $this->loadTemplate('clients_edit', $data);
         } else {

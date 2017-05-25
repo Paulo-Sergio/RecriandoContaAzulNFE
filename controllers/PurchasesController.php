@@ -2,31 +2,28 @@
 
 class PurchasesController extends Controller {
 
+    private $user;
+
     public function __construct() {
         parent::__construct();
 
-        $u = new Users();
-        if (!$u->isLogged()) {
+        $this->user = new Users();
+        if (!$this->user->isLogged()) {
             header("Location: " . BASE_URL . "/login");
             exit();
         }
+        
+        $this->user->setLoggedUser();
     }
 
     public function index() {
-        $data = array();
-
         // informações para o template
-        $u = new Users();
-        $u->setLoggedUser();
-        $company = new Companies($u->getCompany());
-        $data['company_name'] = $company->getName();
-        $data['user_email'] = $u->getEmail();
-
-        if ($u->hasPermission('sales_view')) {
+        $data['info_template'] = Utilities::loadTemplateBaseInfo($this->user);
+        if ($this->user->hasPermission('sales_view')) {
             $purchases = new Purchases();
             $offset = 0;
 
-            $data['purchases_list'] = $purchases->getList($offset, $u->getCompany());
+            $data['purchases_list'] = $purchases->getList($offset, $this->user->getCompany());
 
             $this->loadTemplate('purchases', $data);
         } else {

@@ -2,28 +2,25 @@
 
 class UsersController extends Controller {
 
+    private $user;
+
     public function __construct() {
         parent::__construct();
 
-        $u = new Users();
-        if (!$u->isLogged()) {
+        $this->user = new Users();
+        if (!$this->user->isLogged()) {
             header("Location: " . BASE_URL . "/login");
             exit();
         }
+
+        $this->user->setLoggedUser();
     }
 
     public function index() {
-        $data = array();
-
         // informações para o template
-        $u = new Users();
-        $u->setLoggedUser();
-        $company = new Companies($u->getCompany());
-        $data['company_name'] = $company->getName();
-        $data['user_email'] = $u->getEmail();
-
-        if ($u->hasPermission('users_view')) {
-            $data['users_list'] = $u->getList($u->getCompany());
+        $data['info_template'] = Utilities::loadTemplateBaseInfo($this->user);
+        if ($this->user->hasPermission('users_view')) {
+            $data['users_list'] = $this->user->getList($this->user->getCompany());
 
             $this->loadTemplate('users', $data);
         } else {
@@ -32,25 +29,18 @@ class UsersController extends Controller {
     }
 
     public function add() {
-        $data = array();
-
         // informações para o template
-        $u = new Users();
-        $u->setLoggedUser();
-        $company = new Companies($u->getCompany());
-        $data['company_name'] = $company->getName();
-        $data['user_email'] = $u->getEmail();
-
-        if ($u->hasPermission('users_view')) {
+        $data['info_template'] = Utilities::loadTemplateBaseInfo($this->user);
+        if ($this->user->hasPermission('users_view')) {
             $p = new Permissions();
-            $data['group_list'] = $p->getGroupList($u->getCompany());
+            $data['group_list'] = $p->getGroupList($this->user->getCompany());
 
             if (isset($_POST['email']) && !empty($_POST['email'])) {
                 $email = addslashes($_POST['email']);
                 $password = addslashes($_POST['password']);
                 $group = addslashes($_POST['group']);
 
-                $retorno = $u->add($email, $password, $group, $u->getCompany());
+                $retorno = $this->user->add($email, $password, $group, $this->user->getCompany());
                 if ($retorno) {
                     header("Location: " . BASE_URL . "/users");
                     exit();
@@ -67,25 +57,18 @@ class UsersController extends Controller {
     }
 
     public function edit($id) {
-        $data = array();
-
         // informações para o template
-        $u = new Users();
-        $u->setLoggedUser();
-        $company = new Companies($u->getCompany());
-        $data['company_name'] = $company->getName();
-        $data['user_email'] = $u->getEmail();
-
-        if ($u->hasPermission('users_view')) {
+        $data['info_template'] = Utilities::loadTemplateBaseInfo($this->user);
+        if ($this->user->hasPermission('users_view')) {
             $p = new Permissions();
-            $data['user_info'] = $u->getInfo($id, $u->getCompany());
-            $data['group_list'] = $p->getGroupList($u->getCompany());
+            $data['user_info'] = $this->user->getInfo($id, $this->user->getCompany());
+            $data['group_list'] = $p->getGroupList($this->user->getCompany());
 
             if (isset($_POST['group']) && !empty($_POST['group'])) {
                 $password = addslashes($_POST['password']);
                 $group = addslashes($_POST['group']);
 
-                $u->edit($password, $group, $id, $u->getCompany());
+                $this->user->edit($password, $group, $id, $this->user->getCompany());
                 header("Location: " . BASE_URL . "/users");
                 exit();
             }
@@ -99,17 +82,11 @@ class UsersController extends Controller {
 
     public function delete($id) {
         $data = array();
-
         // informações para o template
-        $u = new Users();
-        $u->setLoggedUser();
-        $company = new Companies($u->getCompany());
-        $data['company_name'] = $company->getName();
-        $data['user_email'] = $u->getEmail();
-
-        if ($u->hasPermission('users_view')) {
+        $data['info_template'] = Utilities::loadTemplateBaseInfo($this->user);
+        if ($this->user->hasPermission('users_view')) {
             $p = new Permissions();
-            $u->delete($id, $u->getCompany());
+            $this->user->delete($id, $this->user->getCompany());
             header("Location: " . BASE_URL . "/users");
             exit();
         } else {

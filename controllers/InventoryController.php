@@ -2,34 +2,31 @@
 
 class InventoryController extends Controller {
 
+    private $user;
+
     public function __construct() {
         parent::__construct();
 
-        $u = new Users();
-        if (!$u->isLogged()) {
+        $this->user = new Users();
+        if (!$this->user->isLogged()) {
             header("Location: " . BASE_URL . "/login");
             exit();
         }
+        
+        $this->user->setLoggedUser();
     }
 
     public function index() {
-        $data = array();
-
         // informações para o template
-        $u = new Users();
-        $u->setLoggedUser();
-        $company = new Companies($u->getCompany());
-        $data['company_name'] = $company->getName();
-        $data['user_email'] = $u->getEmail();
-
-        if ($u->hasPermission('inventory_view')) {
+        $data['info_template'] = Utilities::loadTemplateBaseInfo($this->user);
+        if ($this->user->hasPermission('inventory_view')) {
             $i = new Inventory();
             $offset = 0;
-            $data['inventory_list'] = $i->getList($offset, $u->getCompany());
+            $data['inventory_list'] = $i->getList($offset, $this->user->getCompany());
 
             // verifica as permissões para adionar e editar produtos
-            $data['add_permission'] = $u->hasPermission('inventory_add');
-            $data['edit_permission'] = $u->hasPermission('inventory_edit');
+            $data['add_permission'] = $this->user->hasPermission('inventory_add');
+            $data['edit_permission'] = $this->user->hasPermission('inventory_edit');
 
             $this->loadTemplate('inventory', $data);
         } else {
@@ -39,16 +36,9 @@ class InventoryController extends Controller {
     }
 
     public function add() {
-        $data = array();
-
         // informações para o template
-        $u = new Users();
-        $u->setLoggedUser();
-        $company = new Companies($u->getCompany());
-        $data['company_name'] = $company->getName();
-        $data['user_email'] = $u->getEmail();
-
-        if ($u->hasPermission('inventory_add')) {
+        $data['info_template'] = Utilities::loadTemplateBaseInfo($this->user);
+        if ($this->user->hasPermission('inventory_add')) {
             // quanto usuario enviar os dados do formulario add
             if (isset($_POST['name']) && !empty($_POST['name'])) {
                 $i = new Inventory();
@@ -62,7 +52,7 @@ class InventoryController extends Controller {
                 $price = str_replace('.', '', $price);
                 $price = str_replace(',', '.', $price);
 
-                $i->add($name, $price, $quant, $min_quant, $u->getCompany(), $u->getId());
+                $i->add($name, $price, $quant, $min_quant, $this->user->getCompany(), $this->user->getId());
                 header("Location: " . BASE_URL . "/inventory");
                 exit();
             }
@@ -75,18 +65,11 @@ class InventoryController extends Controller {
     }
 
     public function edit($id) {
-        $data = array();
-
         // informações para o template
-        $u = new Users();
-        $u->setLoggedUser();
-        $company = new Companies($u->getCompany());
-        $data['company_name'] = $company->getName();
-        $data['user_email'] = $u->getEmail();
-
-        if ($u->hasPermission('inventory_edit')) {
+        $data['info_template'] = Utilities::loadTemplateBaseInfo($this->user);
+        if ($this->user->hasPermission('inventory_edit')) {
             $i = new Inventory();
-            $data['inventory_info'] = $i->getInfo($id, $u->getCompany());
+            $data['inventory_info'] = $i->getInfo($id, $this->user->getCompany());
 
             // quanto usuario enviar os dados do formulario edit
             if (isset($_POST['name']) && !empty($_POST['name'])) {
@@ -100,7 +83,7 @@ class InventoryController extends Controller {
                 $price = str_replace('.', '', $price);
                 $price = str_replace(',', '.', $price);
 
-                $i->edit($id, $name, $price, $quant, $min_quant, $u->getCompany(), $u->getId());
+                $i->edit($id, $name, $price, $quant, $min_quant, $this->user->getCompany(), $this->user->getId());
                 header("Location: " . BASE_URL . "/inventory");
                 exit();
             }
@@ -113,12 +96,9 @@ class InventoryController extends Controller {
     }
 
     public function delete($id) {
-        $u = new Users();
-        $u->setLoggedUser();
-
-        if ($u->hasPermission('inventory_edit')) {
+        if ($this->user->hasPermission('inventory_edit')) {
             $i = new Inventory();
-            $i->delete($id, $u->getCompany(), $u->getId());
+            $i->delete($id, $this->user->getCompany(), $this->user->getId());
 
             header("Location: " . BASE_URL . "/inventory");
             exit();

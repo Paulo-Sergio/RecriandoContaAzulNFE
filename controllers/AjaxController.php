@@ -2,14 +2,18 @@
 
 class AjaxController extends Controller {
 
+    private $user;
+
     public function __construct() {
         parent::__construct();
 
-        $u = new Users();
-        if (!$u->isLogged()) {
+        $this->user = new Users();
+        if (!$this->user->isLogged()) {
             header("Location: " . BASE_URL . "/login");
             exit();
         }
+        
+        $this->user->setLoggedUser();
     }
 
     public function index() {
@@ -17,14 +21,11 @@ class AjaxController extends Controller {
     }
 
     public function search_clients() {
-        // informações para definir o USER logado
-        $u = new Users();
-        $u->setLoggedUser();
-
+        $data = array();
         $c = new Clients();
         if (isset($_GET['query']) && !empty($_GET['query'])) {
             $name = addslashes($_GET['query']);
-            $clients = $c->searchClientsByName($name, $u->getCompany());
+            $clients = $c->searchClientsByName($name, $this->user->getCompany());
 
             foreach ($clients as $citem) {
                 $data[] = array(
@@ -39,14 +40,12 @@ class AjaxController extends Controller {
     }
 
     public function search_products() {
-        // informações para definir o USER logado
-        $u = new Users();
-        $u->setLoggedUser();
+        $data = array();
         $i = new Inventory();
 
         if (isset($_GET['query']) && !empty($_GET['query'])) {
             $name = addslashes($_GET['query']);
-            $products = $i->serchProductsByName($name, $u->getCompany());
+            $products = $i->serchProductsByName($name, $this->user->getCompany());
 
             foreach ($products as $pitem) {
                 $data[] = array(
@@ -62,13 +61,11 @@ class AjaxController extends Controller {
 
     public function add_client() {
         $data = array();
-        $u = new Users();
-        $u->setLoggedUser();
         $c = new Clients();
 
         if (isset($_POST['name']) && !empty($_POST['name'])) {
             $name = addslashes($_POST['name']);
-            $data['id'] = $c->add($u->getCompany(), $name);
+            $data['id'] = $c->add($this->user->getCompany(), $name);
         }
 
         echo json_encode($data);

@@ -2,25 +2,23 @@
 
 class SalesController extends Controller {
 
+    private $user;
+
     public function __construct() {
         parent::__construct();
 
-        $u = new Users();
-        if (!$u->isLogged()) {
+        $this->user = new Users();
+        if (!$this->user->isLogged()) {
             header("Location: " . BASE_URL . "/login");
             exit();
         }
+
+        $this->user->setLoggedUser();
     }
 
     public function index() {
-        $data = array();
-
         // informações para o template
-        $u = new Users();
-        $u->setLoggedUser();
-        $company = new Companies($u->getCompany());
-        $data['company_name'] = $company->getName();
-        $data['user_email'] = $u->getEmail();
+        $data['info_template'] = Utilities::loadTemplateBaseInfo($this->user);
 
         $data['statuser'] = array(
             '0' => 'Aguardando Pagamento',
@@ -28,11 +26,11 @@ class SalesController extends Controller {
             '2' => 'Cancelado'
         );
 
-        if ($u->hasPermission('sales_view')) {
+        if ($this->user->hasPermission('sales_view')) {
             $s = new Sales();
             $offset = 0;
 
-            $data['sales_list'] = $s->getList($offset, $u->getCompany());
+            $data['sales_list'] = $s->getList($offset, $this->user->getCompany());
 
             $this->loadTemplate('sales', $data);
         } else {
@@ -42,16 +40,9 @@ class SalesController extends Controller {
     }
 
     public function add() {
-        $data = array();
-
         // informações para o template
-        $u = new Users();
-        $u->setLoggedUser();
-        $company = new Companies($u->getCompany());
-        $data['company_name'] = $company->getName();
-        $data['user_email'] = $u->getEmail();
-
-        if ($u->hasPermission('sales_view')) {
+        $data['info_template'] = Utilities::loadTemplateBaseInfo($this->user);
+        if ($this->user->hasPermission('sales_view')) {
             $s = new Sales();
 
             if (isset($_POST['client_id']) && !empty($_POST['client_id'])) {
@@ -59,7 +50,7 @@ class SalesController extends Controller {
                 $status = addslashes($_POST['status']);
                 $productsQuant = $_POST['quant'];
 
-                $s->add($u->getCompany(), $clientId, $u->getId(), $productsQuant, $status);
+                $s->add($this->user->getCompany(), $clientId, $this->user->getId(), $productsQuant, $status);
                 header("Location: " . BASE_URL . "/sales");
                 exit();
             }
@@ -72,30 +63,24 @@ class SalesController extends Controller {
     }
 
     public function edit($id) {
-        $data = array();
-
         // informações para o template
-        $u = new Users();
-        $u->setLoggedUser();
-        $company = new Companies($u->getCompany());
-        $data['company_name'] = $company->getName();
-        $data['user_email'] = $u->getEmail();
-
+        $data['info_template'] = Utilities::loadTemplateBaseInfo($this->user);
+        
         $data['statuser'] = array(
             '0' => 'Aguardando Pagamento',
             '1' => 'Pago',
             '2' => 'Cancelado'
         );
 
-        if ($u->hasPermission('sales_view')) {
+        if ($this->user->hasPermission('sales_view')) {
             $s = new Sales();
-            $data['sales_info'] = $s->getInfo($id, $u->getCompany());
-            $data['permission_edit'] = $u->hasPermission('sales_edit');
+            $data['sales_info'] = $s->getInfo($id, $this->user->getCompany());
+            $data['permission_edit'] = $this->user->hasPermission('sales_edit');
 
             if (isset($_POST['status']) && $data['permission_edit']) {
                 $status = addslashes($_POST['status']);
 
-                $s->changeStatus($id, $status, $u->getCompany());
+                $s->changeStatus($id, $status, $this->user->getCompany());
                 header("Location: " . BASE_URL . "/sales");
                 exit();
             }
