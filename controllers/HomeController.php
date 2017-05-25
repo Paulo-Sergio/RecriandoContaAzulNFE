@@ -23,12 +23,12 @@ class HomeController extends Controller {
         $sales = new Sales();
         $purchases = new Purchases();
 
-        // produtos vendidos
-        $data['products_sold'] = $sales->getSoldProducts(date('Y-m-d', strtotime('-30 days')), date('Y-m-d'), $this->user->getCompany());
+        // produtos vendidos nos ultimos 30 dias
+        $data['products_sold'] = $sales->getSoldProducts(Utilities::last30Days(), date('Y-m-d'), $this->user->getCompany());
         // receitas de 30 dias atras até data de hoje
-        $data['revenue'] = $sales->getTotalRevenue(date('Y-m-d', strtotime('-30 days')), date('Y-m-d'), $this->user->getCompany());
+        $data['revenue'] = $sales->getTotalRevenue(Utilities::last30Days(), date('Y-m-d'), $this->user->getCompany());
         // despesas de 30 dias atras até data de hoje
-        $data['expenses'] = $purchases->getTotalExpenses(date('Y-m-d', strtotime('-30 days')), date('Y-m-d'), $this->user->getCompany());;
+        $data['expenses'] = $purchases->getTotalExpenses(Utilities::last30Days(), date('Y-m-d'), $this->user->getCompany());;
 
         $this->loadTemplate('home', $data);
     }

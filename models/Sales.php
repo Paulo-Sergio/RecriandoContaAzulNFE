@@ -146,11 +146,11 @@ class Sales extends Model {
         $sql = "SELECT SUM(total_price) AS total "
                 . "FROM sales "
                 . "WHERE id_company = :id_company "
-                . "AND date_sale BETWEEN :period1 AND :period2";
+                . "AND date_sale BETWEEN :period1 AND NOW()";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id_company', $idCompany);
         $stmt->bindParam(':period1', $period1);
-        $stmt->bindParam(':period2', $period2);
+        //$stmt->bindParam(':period2', $period2);
         $stmt->execute();
 
         $row = $stmt->fetch();
@@ -163,11 +163,12 @@ class Sales extends Model {
         $sql = "SELECT id "
                 . "FROM sales "
                 . "WHERE id_company = :id_company "
-                . "AND date_sale BETWEEN :period1 AND :period2";
+                . "AND date_sale "
+                . "BETWEEN :period1 AND NOW()";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id_company', $idCompany);
         $stmt->bindParam(':period1', $period1);
-        $stmt->bindParam(':period2', $period2);
+        //$stmt->bindParam(':period2', $period2);
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {

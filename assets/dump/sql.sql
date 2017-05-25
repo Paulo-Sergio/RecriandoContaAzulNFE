@@ -15,6 +15,8 @@ DELETE FROM inventory WHERE id = 4 AND id_company = 1;
 select * from sales where id_company = 1;
 select * from sales_products where id_company = 1;
 
+select * from purchases where id_company = 1;
+
 # ordenando as vendas pelas datas mais recentes as mais antigas, concatenando com o cliente
 SELECT s.id, s.date_sale, s.total_price, s.status, c.name 
 FROM sales s INNER JOIN clients c ON s.id_client = c.id
@@ -35,4 +37,4 @@ AND date_sale BETWEEN '2017-05-01' AND '2017-05-31';
 SELECT id FROM sales WHERE id_company = 1
 AND date_sale BETWEEN '2017-05-01' AND '2017-05-31';
 # com os id's das vendas consigo pegar todos os produtos vendidos nesse periodo
-SELECT COUNT(*) AS total FROM sales_products WHERE id_sale IN (9,10,13,14,15);
+SELECT COUNT(*) AS total FROM sales_products WHERE id_sale IN (9,10,13,14,15,16);

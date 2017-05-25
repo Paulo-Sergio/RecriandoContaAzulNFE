@@ -11,4 +11,12 @@ class Utilities {
         return $data;
     }
 
+    public static function last30Days() {
+        return date('Y-m-d', strtotime('-30 days'));
+    }
+    
+    public static function today() {
+        return date('Y-m-d');
+    }
+
 }

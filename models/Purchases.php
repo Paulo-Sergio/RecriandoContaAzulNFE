@@ -18,11 +18,11 @@ class Purchases extends Model {
         $sql = "SELECT SUM(total_price) AS total "
                 . "FROM purchases "
                 . "WHERE id_company = :id_company "
-                . "AND date_purchase BETWEEN :period1 AND :period2";
+                . "AND date_purchase BETWEEN :period1 AND NOW()";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id_company', $idCompany);
         $stmt->bindParam(':period1', $period1);
-        $stmt->bindParam(':period2', $period2);
+        //$stmt->bindParam(':period2', $period2);
         $stmt->execute();
 
         $row = $stmt->fetch();
