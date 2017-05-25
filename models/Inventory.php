@@ -75,6 +75,21 @@ class Inventory extends Model {
         //$this->setLog($id, $idCompany, $idUser, 'del');
     }
 
+    public function searchInventoryByName($name, $idCompany) {
+        $sql = "SELECT * FROM inventory WHERE name LIKE :name AND id_company = :id_company LIMIT 10";
+        $stmt = $this->db->prepare($sql);
+        $name = '%' . $name . '%';
+        $stmt->bindParam(":name", $name);
+        $stmt->bindParam(":id_company", $idCompany);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            return $stmt->fetchAll();
+        }
+        
+        return null;
+    }
+
     private function setLog($idProduct, $idCompany, $idUser, $action) {
         $sql = "INSERT INTO inventory_history SET id_company = :id_company, "
                 . "id_product = :id_product, id_user = :id_user, action = :action, date_action = NOW()";
@@ -123,7 +138,7 @@ class Inventory extends Model {
         if ($stmt->rowCount() > 0) {
             return $stmt->fetchAll();
         }
-        
+
         return null;
     }
 

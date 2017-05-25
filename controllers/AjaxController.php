@@ -38,6 +38,25 @@ class AjaxController extends Controller {
 
         echo json_encode($data);
     }
+    
+    public function search_inventory() {
+        $data = array();
+        $i = new Inventory();
+        if (isset($_GET['query']) && !empty($_GET['query'])) {
+            $name = addslashes($_GET['query']);
+            $products = $i->searchInventoryByName($name, $this->user->getCompany());
+
+            foreach ($products as $product) {
+                $data[] = array(
+                    'name' => $product['name'],
+                    'link' => BASE_URL . '/inventory/edit/' . $product['id']
+                    //'id' => $product['id']
+                );
+            }
+        }
+
+        echo json_encode($data);
+    }
 
     public function search_products() {
         $data = array();

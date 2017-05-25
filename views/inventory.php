@@ -32,3 +32,5 @@
         </tr>
     <?php endforeach; ?>
 </table>
+
+<script type="text/javascript" src="<?= BASE_URL ?>/assets/js/script_inventory.js"></script>
