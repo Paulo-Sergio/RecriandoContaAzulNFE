@@ -2,6 +2,18 @@
 
 class Purchases extends Model {
 
+    public function getList($offset, $idCompany) {
+        $sql = "SELECT * FROM purchases WHERE id_company = :id_company ORDER BY date_purchase DESC LIMIT $offset, 10";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_company', $idCompany);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            return $stmt->fetchAll();
+        }
+        return null;
+    }
+
     public function getTotalExpenses($period1, $period2, $idCompany) {
         $sql = "SELECT SUM(total_price) AS total "
                 . "FROM purchases "
