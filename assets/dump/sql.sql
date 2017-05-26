@@ -37,4 +37,4 @@ AND date_sale BETWEEN '2017-05-01' AND '2017-05-31';
 SELECT id FROM sales WHERE id_company = 1
 AND date_sale BETWEEN '2017-05-01' AND '2017-05-31';
 # com os id's das vendas consigo pegar todos os produtos vendidos nesse periodo
-SELECT COUNT(*) AS total FROM sales_products WHERE id_sale IN (9,10,13,14,15,16);
+SELECT quant AS total FROM sales_products WHERE id_sale IN (9,10,13,14,15,16);
