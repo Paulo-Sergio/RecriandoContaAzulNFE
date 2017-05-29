@@ -38,3 +38,11 @@ SELECT id FROM sales WHERE id_company = 1
 AND date_sale BETWEEN '2017-05-01' AND '2017-05-31';
 # com os id's das vendas consigo pegar todos os produtos vendidos nesse periodo
 SELECT quant AS total FROM sales_products WHERE id_sale IN (9,10,13,14,15,16);
+
+
+# selecionando em cada dia qual foi a receita em vendas desse dia
+SELECT DATE_FORMAT(date_sale, '%Y-%m-%d') as date_sale, SUM(total_price) as total_price
+FROM sales
+WHERE id_company = 1
+AND date_sale BETWEEN '2017-05-01' AND '2017-05-31'
+GROUP BY DATE_FORMAT(date_sale, '%Y-%m-%d')

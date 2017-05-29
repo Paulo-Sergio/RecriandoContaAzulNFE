@@ -193,6 +193,65 @@ class Sales extends Model {
         return $stmt->fetch()['total'];
     }
 
+    public function getRevenueList($period1, $period2, $idCompany) {
+        $array = array();
+
+        // montando o array
+        $currentDay = $period1;
+        while ($period2 != $currentDay) {
+            $array[$currentDay] = 0;
+            $currentDay = date('Y-m-d', strtotime('+1 day', strtotime($currentDay)));
+        }
+
+        $sql = "SELECT DATE_FORMAT(date_sale, '%Y-%m-%d') as date_sale, SUM(total_price) as total_price "
+                . "FROM sales "
+                . "WHERE id_company = :id_company "
+                . "AND date_sale BETWEEN :period1 AND :period2 "
+                . "GROUP BY DATE_FORMAT(date_sale, '%Y-%m-%d')";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_company', $idCompany);
+        $stmt->bindParam(':period1', $period1);
+        $stmt->bindParam(':period2', $period2);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $rows = $stmt->fetchAll();
+            // preenchendo o array
+            foreach ($rows as $sale_item) {
+                $array[$sale_item['date_sale']] = $sale_item['total_price'];
+            }
+        }
+
+        return $array;
+    }
+
+    public function getQuantStatusList($period1, $period2, $idCompany) {
+        // montando o array
+        $array = array('0' => 0, '1' => 0, '2' => 0);
+
+        $sql = "SELECT COUNT(id) as total, status "
+                . "FROM sales "
+                . "WHERE id_company = :id_company "
+                . "AND date_sale BETWEEN :period1 AND :period2 "
+                . "GROUP BY status ORDER BY status ASC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_company', $idCompany);
+        $stmt->bindParam(':period1', $period1);
+        $stmt->bindParam(':period2', $period2);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $rows = $stmt->fetchAll();
+
+            foreach ($rows as $sale_item) {
+                // preenchendo o array
+                $array[$sale_item['status']] = $sale_item['total'];
+            }
+        }
+
+        return $array;
+    }
+
     public function getSalesFiltered($clientName, $period1, $period2, $status, $order, $idCompany) {
         $sql = "SELECT clients.name, sales.date_sale, sales.status, sales.total_price "
                 . "FROM sales "

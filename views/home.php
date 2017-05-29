@@ -35,11 +35,18 @@
         <div class="db-info">
             <div class="db-info-title">Status de Pagamento.</div>
             <div class="db-info-body">
-                <canvas id="rel2"></canvas>
+                <canvas id="rel2" height="300"></canvas>
             </div>
         </div>
     </div>
 </div>
 
+<script type="text/javascript">
+    var days_list = <?php echo json_encode($days_list); ?>;
+    var revenue_list = <?php echo json_encode(array_values($revenue_list)); ?>;
+    var expenses_list = <?php echo json_encode(array_values($expenses_list)); ?>;
+    var status_name_list = <?php echo json_encode(array_values($statuses)); ?>;
+    var status_list = <?php echo json_encode(array_values($status_list)); ?>;
+</script>
 <script type="text/javascript" src="<?= BASE_URL ?>/assets/js/Chart.min.js"></script>
 <script type="text/javascript" src="<?= BASE_URL ?>/assets/js/script_home.js"></script>
