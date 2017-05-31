@@ -248,7 +248,9 @@ class Nfe extends Model {
             $nfeTools->addProtocolo($pathNFefile, $pathProtfile, true);
 
             // Gera o DANFE
-            $docxml = new NFePHP\Common\Files\FilesFolders::readFile($pathProtfile);
+            //$docxml = new NFePHP\Common\Files\FilesFolders::readFile($pathProtfile);
+            $docxml_ = new NFePHP\Common\Files\FilesFolders();
+            $docxml = $docxml_::readFile($pathProtfile);
 
             $docFormat = $nfeTools->aConfig['aDocFormat']->format;
             $docPaper = $nfeTools->aConfig['aDocFormat']->paper;
