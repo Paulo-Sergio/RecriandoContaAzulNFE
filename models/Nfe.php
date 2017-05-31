@@ -2,7 +2,7 @@
 
 class Nfe extends Model {
 
-    public function emitirNFE() {
+    public function emitirNFE($cNF, $destinatario, $prods, $fatinfo) {
         $nfe = new NFePHP\NFe\MakeNFe();
         $nfeTools = new NFePHP\NFe\ToolsNFe("nfe/files/config.json");
 
@@ -45,6 +45,225 @@ class Nfe extends Model {
         $dhCont = ''; //entrada em contingência AAAA-MM-DDThh:mm:ssTZD
         $xJust = ''; //Justificativa da entrada em contingência
         $cnpj = $nfeTools->aConfig['cnpj']; // CNPJ do emitente
+
+        /* Numero e versão da NFe (infNFe) */
+        $ano = date('y', strtotime($dhEmi));
+        $mes = date('m', strtotime($dhEmi));
+
+        $chave = $nfe->montaChave($cUF, $ano, $mes, $cnpj, $mod, $serie, $nNF, $tpEmis, $nNF);
+        $versao = $nfeTools->aConfig['nfeVersao'];
+        $resp = $nfe->taginfNFe($chave, $versao);
+
+        $cDV = substr($chave, -1); //Digito Verificador da Chave de Acesso da NF-e, o DV é calculado com a aplicação do algoritmo módulo 11 (base 2,9) da Chave de Acesso.
+        //tag IDE
+        $resp = $nfe->tagide($cUF, $nNF, $natOp, $indPag, $mod, $serie, $nNF, $dhEmi, $dhSaiEnt, $tpNF, $idDest, $cMunFG, $tpImp, $tpEmis, $cDV, $tpAmb, $finNFe, $indFinal, $indPres, $procEmi, $verProc, $dhCont, $xJust);
+
+        //Dados do emitente
+        $CPF = ''; // Para Emitente CPF
+        $xNome = $nfeTools->aConfig['razaosocial'];
+        $xFant = $nfeTools->aConfig['nomefantasia'];
+        $IE = $nfeTools->aConfig['ie']; // Inscrição Estadual
+        $IEST = $nfeTools->aConfig['iest']; // IE do Substituti Tributário
+        $IM = $nfeTools->aConfig['im']; // Inscrição Municipal
+        $CNAE = $nfeTools->aConfig['cnae']; // CNAE Fiscal
+        $CRT = $nfeTools->aConfig['regime']; // CRT (Código de Regime Tributário), 1=simples nacional
+        $resp = $nfe->tagemit($cnpj, $CPF, $xNome, $xFant, $IE, $IEST, $IM, $CNAE, $CRT);
+
+        //endereço do emitente
+        $xLgr = $nfeTools->aConfig['xLgr'];
+        $nro = $nfeTools->aConfig['nro'];
+        $xCpl = $nfeTools->aConfig['xCpl'];
+        $xBairro = $nfeTools->aConfig['xBairro'];
+        $cMun = $nfeTools->aConfig['cMun'];
+        $xMun = $nfeTools->aConfig['xMun'];
+        $UF = $nfeTools->aConfig['UF'];
+        $CEP = $nfeTools->aConfig['CEP'];
+        $cPais = $nfeTools->aConfig['cPais'];
+        $xPais = $nfeTools->aConfig['xPais'];
+        $fone = $nfeTools->aConfig['fone'];
+        $resp = $nfe->tagenderEmit($xLgr, $nro, $xCpl, $xBairro, $cMun, $xMun, $UF, $CEP, $cPais, $xPais, $fone);
+
+        //destinatário
+        $CNPJ = $destinatario['cnpj'];
+        $CPF = $destinatario['cpf'];
+        $idEstrangeiro = $destinatario['idestrangeiro'];
+        $xNome = $destinatario['nome']; // Nome/Razão Social
+        $email = $destinatario['email'];
+        $indIEDest = $destinatario['iedest']; // Indica se tem IE (vazio ou 1)
+        $IE = $destinatario['ie']; // Insc. Estadual
+        $ISUF = $destinatario['isuf']; // Insc. SUFRAMA
+        $IM = $destinatario['im']; // Insc. Municipal
+        $resp = $nfe->tagdest($CNPJ, $CPF, $idEstrangeiro, $xNome, $indIEDest, $IE, $ISUF, $IM, $email);
+
+        //Endereço do destinatário
+        $xLgr = $destinatario['end']['logradouro'];
+        $nro = $destinatario['end']['numero'];
+        $xCpl = $destinatario['end']['complemento'];
+        $xBairro = $destinatario['end']['bairro'];
+        $xMun = $destinatario['end']['mu'];
+        $UF = $destinatario['end']['uf'];
+        $CEP = $destinatario['end']['cep'];
+        $xPais = $destinatario['end']['pais'];
+        $fone = $destinatario['end']['fone'];
+        $cMun = $destinatario['end']['cmu']; // Código do Municipio
+        $cPais = $destinatario['end']['cpais']; // Código do País
+        $resp = $nfe->tagenderDest($xLgr, $nro, $xCpl, $xBairro, $cMun, $xMun, $UF, $CEP, $cPais, $xPais, $fone);
+
+        // Inicialização de váriaveis
+        $vBC = 0;
+        $vICMSDeson = 0;
+        $vProd = 0;
+        $vFrete = 0;
+        $vSeg = 0;
+        $vDesc = 0;
+        $vOutro = 0;
+        $vII = 0;
+        $vIPI = 0;
+        $vIOF = 0;
+        $vPIS = 0;
+        $vCOFINS = 0;
+        $vICMS = 0;
+        $vBCST = 0;
+        $vST = 0;
+        $vISS = 0;
+
+        $nItem = 1;
+        foreach ($prods as $prod) {
+
+            $cProd = $prod['cProd']; // Código do Produto
+            $cEAN = $prod['cEAN']; // Código de Barras (EAN)
+            $xProd = $prod['xProd']; // Descrição do Produto
+            $NCM = $prod['NCM']; // Código NCM (Nomenclatura Comum do MERCOSUL)
+            $EXTIPI = $prod['EXTIPI']; // Código de excessão do NCM
+            $CFOP = $prod['CFOP']; // Código Fiscal de Operações e Prestações
+            $uCom = $prod['uCom']; // Unidade Comercial do produto
+            $qCom = $prod['qCom']; // Quantidade
+            $vUnCom = $prod['vUnCom']; // Valor Unitário
+            $vProd += $prod['vProd']; // Valor do Produto
+            $cEANTrib = $prod['cEANTrib']; // Código de Barra Tributável
+            $uTrib = $prod['uTrib']; // Unidade Tributável
+            $qTrib = $prod['qTrib']; // Quantidade Tributável
+            $vUnTrib = $prod['vUnTrib']; // Valor Unitário de tributação
+            $vFrete += $prod['vFrete']; // Valor Total do Frete
+            $vSeg += $prod['vSeg']; // Valor Total do Seguro
+            $vDesc += $prod['vDesc']; // Valor do Desconto
+            $vOutro += $prod['vOutro']; // Outras Despesas
+            $indTot = $prod['indTot']; // Indica se valor do Item (vProd) entra no valor total da NF-e. As vezes é um brinde
+            $xPed = $prod['xPed']; // Número do Pedido de Compra
+            $nItemPed = $prod['nItemPed']; // Item do Pedido de Compra
+            $nFCI = $prod['nFCI']; // Número de controle da FCI - Importação
+            $vBC += $prod['bc']; // Base de cálculo
+            // Adiciona o produto na nota
+            $nfe->tagprod($nItem, $cProd, $cEAN, $xProd, $NCM, $EXTIPI, $CFOP, $uCom, $qCom, $vUnCom, $prod['vProd'], $cEANTrib, $uTrib, $qTrib, $vUnTrib, $prod['vFrete'], $prod['vSeg'], $prod['vDesc'], $prod['vOutro'], $indTot, $xPed, $nItemPed, $nFCI);
+
+            // Imposto Total deste produto
+            $vTotTrib = $prod['impostoTotal']; // ICMS + IPI + PIS + COFINS, etc...
+            $nfe->tagimposto($nItem, $vTotTrib);
+
+            // ICMS
+            $vICMS += $prod['icms'];
+            //$nfe->tagICMS(...);
+            // IPI
+            $vIPI += $prod['ipi'];
+            //$nfe->tagIPI(...);
+            // PIS
+            $vPIS += $prod['pis'];
+            //$nfe->tagPIS(...);
+            // CONFINS
+            $vCOFINS += $prod['cofins'];
+            //$nfe->tagCOFINS(...);
+
+            $nItem++;
+        }
+
+        // Valor da NF
+        $vNF = number_format($vProd - $vDesc - $vICMSDeson + $vST + $vFrete + $vSeg + $vOutro + $vII + $vIPI, 2, '.', '');
+
+        // Valor Total Tributável
+        $vTotTrib = number_format($vICMS + $vST + $vII + $vIPI + $vPIS + $vCOFINS + $vIOF + $vISS, 2, '.', '');
+
+        // Grupos Totais
+        $nfe->tagICMSTot($vBC, $vICMS, $vICMSDeson, $vBCST, $vST, $vProd, $vFrete, $vSeg, $vDesc, $vII, $vIPI, $vPIS, $vCOFINS, $vOutro, $vNF, $vTotTrib);
+
+        // Frete
+        $modFrete = '9'; //0=Por conta do emitente; 1=Por conta do destinatário/remetente; 2=Por conta de terceiros; 9=Sem Frete;
+        $nfe->tagtransp($modFrete);
+
+        // Dados da fatura
+        $nFat = $fatinfo['nfat']; // Número da Fatura
+        $vOrig = $fatinfo['vorig']; // Valor original da fatura
+        $vDesc = $fatinfo['vdesc']; // Valor do desconto
+        $vLiq = $fatinfo['nfat']; // Valor Líquido
+        $nfe->tagfat($nFat, $vOrig, $vDesc, $vLiq);
+
+        // Monta[XML] a NF-e e retorna o resultado
+        $resp = $nfe->montaNFe();
+        if ($resp === true) {
+            $xml = $nfe->getXML();
+
+            // Assina o XML
+            $xml = $nfeTools->assina($xml);
+
+            // Valida o XML
+            $v = $nfeTools->validarXml($xml);
+
+            if ($v == false) {
+                foreach ($nfeTools->errors as $erro) {
+                    if (is_array($erro)) {
+                        foreach ($erro as $er) {
+                            echo $er . "<br/>";
+                        }
+                    } else {
+                        echo $erro . "<br/>";
+                    }
+                }
+
+                exit;
+            }
+
+            $idLote = '';
+            $indSinc = '0'; // 0=asíncrono, 1=síncrono
+            $flagZip = false;
+            $resposta = array();
+
+            // Envia para o SEFAZ
+            $nfeTools->sefazEnviaLote($xml, $tpAmb, $idLote, $resposta, $indSinc, $flagZip);
+
+            // Consulta o RECIBO
+            $protXML = $nfeTools->sefazConsultaRecibo($resposta['nRec'], $tpAmb);
+
+            // Chave aleatória para o XML/PDF
+            $chave = md5(time() . rand(0, 9999));
+            $xmlName = $chave . '.xml';
+            $danfeName = $chave . '.pdf';
+
+            // Salva os arquivos temporário e validado
+            $pathNFefile = "nfe/files/nfe/validadas/" . $xmlName;
+            $pathProtfile = "nfe/files/nfe/temp/" . $xmlName;
+            $pathDanfeFile = "nfe/files/nfe/danfe/" . $danfeName;
+            file_put_contents($pathNFefile, $xml);
+            file_put_contents($pathProtfile, $protXML);
+
+            // Adiciona o Protocolo
+            $nfeTools->addProtocolo($pathNFefile, $pathProtfile, true);
+
+            // Gera o DANFE
+            $docxml = new NFePHP\Common\Files\FilesFolders::readFile($pathProtfile);
+
+            $docFormat = $nfeTools->aConfig['aDocFormat']->format;
+            $docPaper = $nfeTools->aConfig['aDocFormat']->paper;
+            $docLogo = $nfeTools->aConfig['aDocFormat']->pathLogoFile;
+
+            $danfe = new NFePHP\Extras\Danfe($docxml, $docFormat, $docPaper, $docLogo);
+            $danfe->montaDANFE();
+            $danfe->printDANFE($pathDanfeFile, "F");
+
+            return $chave;
+        } else {
+            foreach ($nfe->erros as $erro) {
+                echo $erro['tag'] . ' - ' . $erro['desc'] . '<br>';
+            }
+        }
     }
 
 }
