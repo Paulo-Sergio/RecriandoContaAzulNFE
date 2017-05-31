@@ -2,4 +2,4 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 #RewriteRule ^(.*)$ /index.php?q=$1 [QSA,L]
-RewriteRule ^(.*)$ /RecriandoContaAzul/index.php?q=$1 [QSA,L]
+RewriteRule ^(.*)$ /RecriandoContaAzulNFE/index.php?q=$1 [QSA,L]

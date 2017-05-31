@@ -3,7 +3,7 @@ session_start();
 require './vendor/autoload.php';
 require './config.php';
 
-define('BASE_URL', 'http://localhost/RecriandoContaAzul');
+define('BASE_URL', 'http://localhost/RecriandoContaAzulNFE');
 
 /**
  * CONFIGURANDO AUTO-LOAD 

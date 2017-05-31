@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `contaazul` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `contaazul`;
+CREATE DATABASE  IF NOT EXISTS `contaazulnfe` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `contaazulnfe`;
 -- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
--- Host: localhost    Database: contaazul
+-- Host: localhost    Database: contaazulnfe
 -- ------------------------------------------------------
 -- Server version	5.7.14
 
@@ -361,7 +361,7 @@ INSERT INTO `users` VALUES (1,1,'admin@empresa123.com.br','202cb962ac59075b964b0
 UNLOCK TABLES;
 
 --
--- Dumping routines for database 'contaazul'
+-- Dumping routines for database 'contaazulnfe'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
