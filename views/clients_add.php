@@ -31,21 +31,26 @@
 
     <label for="address">Rua</label>
     <input type="text" name="address"><br><br>
-    
+
     <label for="address_number">Número</label>
     <input type="text" name="address_number"><br><br>
-    
+
     <label for="address2">Complemento</label>
     <input type="text" name="address2"><br><br>
 
     <label for="address_neighb">Bairro</label>
     <input type="text" name="address_neighb"><br><br>
 
-    <label for="address_city">Cidade</label>
-    <input type="text" name="address_city"><br><br>
-
     <label for="address_state">Estado</label>
-    <input type="text" name="address_state"><br><br>
+    <select name="address_state" onchange="changeState(this)">
+        <?php foreach ($states as $state) : ?>
+            <option value="<?= $state['Uf'] ?>"><?= $state['Uf'] ?></option>
+        <?php endforeach; ?>
+    </select>
+
+    <label for="address_city">Cidade</label>
+    <select name="address_city">
+    </select>
 
     <label for="address_country">País</label>
     <input type="text" name="address_country"><br><br>

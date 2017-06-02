@@ -12,7 +12,7 @@ class AjaxController extends Controller {
             header("Location: " . BASE_URL . "/login");
             exit();
         }
-        
+
         $this->user->setLoggedUser();
     }
 
@@ -38,7 +38,7 @@ class AjaxController extends Controller {
 
         echo json_encode($data);
     }
-    
+
     public function search_inventory() {
         $data = array();
         $i = new Inventory();
@@ -50,7 +50,7 @@ class AjaxController extends Controller {
                 $data[] = array(
                     'name' => $product['name'],
                     'link' => BASE_URL . '/inventory/edit/' . $product['id']
-                    //'id' => $product['id']
+                        //'id' => $product['id']
                 );
             }
         }
@@ -74,7 +74,7 @@ class AjaxController extends Controller {
                 );
             }
         }
-        
+
         echo json_encode($data);
     }
 
@@ -85,6 +85,19 @@ class AjaxController extends Controller {
         if (isset($_POST['name']) && !empty($_POST['name'])) {
             $name = addslashes($_POST['name']);
             $data['id'] = $c->add($this->user->getCompany(), $name);
+        }
+
+        echo json_encode($data);
+    }
+
+    public function get_city_list() {
+        $data = array();
+
+        $cidade = new Cidade();
+        
+        if (isset($_GET['state']) && !empty($_GET['state'])) {
+            $state = addslashes($_GET['state']);
+            $data['cities'] = $cidade->getCityList($state);
         }
 
         echo json_encode($data);

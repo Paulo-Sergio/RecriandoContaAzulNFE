@@ -3,7 +3,7 @@
 class Sales extends Model {
 
     public function getList($offset, $idCompany) {
-        $sql = "SELECT s.id, s.date_sale, s.total_price, s.status, c.name "
+        $sql = "SELECT s.id, s.date_sale, s.total_price, s.status, s.nfe_key, c.name "
                 . "FROM sales s "
                 . "LEFT JOIN clients c ON s.id_client = c.id "
                 . "WHERE s.id_company = :id_company "

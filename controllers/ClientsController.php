@@ -12,7 +12,7 @@ class ClientsController extends Controller {
             header("Location: " . BASE_URL . "/login");
             exit();
         }
-        
+
         $this->user->setLoggedUser();
     }
 
@@ -71,6 +71,9 @@ class ClientsController extends Controller {
                 header("Location: " . BASE_URL . "/clients");
             }
 
+            $cidade = new Cidade();
+            $data['states'] = $cidade->getStates();
+            
             $this->loadTemplate('clients_add', $data);
         } else {
             header("Location: " . BASE_URL . "/clients");

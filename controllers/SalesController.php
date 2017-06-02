@@ -91,5 +91,13 @@ class SalesController extends Controller {
             exit();
         }
     }
+    
+    public function view_nfe($nfeKey) {
+        
+    }
+    
+    public function generate_nfe($idSale) {
+        
+    }
 
 }
