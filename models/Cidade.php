@@ -24,5 +24,17 @@ class Cidade extends Model {
         }
         return null;
     }
+    
+    public function getCity($idCity) {
+        $sql = "SELECT Nome FROM cidade WHERE CodigoMunicipio = :codMunicipio";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':codMunicipio', $idCity);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            return $stmt->fetch()['Nome'];
+        }
+        return null;
+    }
 
 }

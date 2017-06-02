@@ -38,11 +38,12 @@ class Clients extends Model {
         return $row['c'];
     }
 
-    public function add($idCompany, $name, $email = '', $phone = '', $stars = 3, $internal_obs = '', $address_zipcode = '', $address = '', $address_number = '', $address2 = '', $address_neighb = '', $address_city = '', $address_state = '', $address_country = '') {
+    public function add($idCompany, $name, $email = '', $phone = '', $stars = 3, $internal_obs = '', $address_zipcode = '', $address = '', $address_number = '', $address2 = '', $address_neighb = '', $address_city = '', $address_state = '', $address_country = '', $address_citycode = '', $address_countrycode = 1058) {
         $sql = "INSERT INTO clients SET id_company = :id_company, name = :name, email = :email,
             phone = :phone, stars = :stars, internal_obs = :internal_obs, address_zipcode = :address_zipcode,
             address = :address, address_number = :address_number, address2 = :address2,
-            address_neighb = :address_neighb, address_city = :address_city, address_state = :address_state, address_country = :address_country";
+            address_neighb = :address_neighb, address_city = :address_city, address_citycode = :address_citycode, 
+            address_state = :address_state, address_country = :address_country, address_country_code = :address_country_code";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id_company', $idCompany);
         $stmt->bindParam(':name', $name);
@@ -56,19 +57,22 @@ class Clients extends Model {
         $stmt->bindParam(':address2', $address2);
         $stmt->bindParam(':address_neighb', $address_neighb);
         $stmt->bindParam(':address_city', $address_city);
+        $stmt->bindParam(':address_citycode', $address_citycode);
         $stmt->bindParam(':address_state', $address_state);
         $stmt->bindParam(':address_country', $address_country);
+        $stmt->bindParam(':address_country_code', $address_countrycode);
         $stmt->execute();
 
         return $this->db->lastInsertId();
     }
 
-    public function edit($id, $idCompany, $name, $email, $phone, $stars, $internal_obs, $address_zipcode, $address, $address_number, $address2, $address_neighb, $address_city, $address_state, $address_country) {
+    public function edit($id, $idCompany, $name, $email, $phone, $stars, $internal_obs, $address_zipcode, $address, $address_number, $address2, $address_neighb, $address_city, $address_state, $address_country, $address_citycode) {
         $sql = "UPDATE clients SET id_company = :id_company, name = :name, email = :email,
             phone = :phone, stars = :stars, internal_obs = :internal_obs, address_zipcode = :address_zipcode,
             address = :address, address_number = :address_number, address2 = :address2,
-            address_neighb = :address_neighb, address_city = :address_city, address_state = :address_state, 
-            address_country = :address_country WHERE id = :id AND id_company = :id_company2";
+            address_neighb = :address_neighb, address_city = :address_city, address_citycode = :address_citycode,
+            address_state = :address_state, address_country = :address_country, address_countrycode = 1058 
+            WHERE id = :id AND id_company = :id_company2";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id_company', $idCompany);
         $stmt->bindParam(':name', $name);
@@ -82,6 +86,7 @@ class Clients extends Model {
         $stmt->bindParam(':address2', $address2);
         $stmt->bindParam(':address_neighb', $address_neighb);
         $stmt->bindParam(':address_city', $address_city);
+        $stmt->bindParam(':address_citycode', $address_citycode);
         $stmt->bindParam(':address_state', $address_state);
         $stmt->bindParam(':address_country', $address_country);
         $stmt->bindParam(':id', $id);

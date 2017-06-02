@@ -51,6 +51,7 @@ class ClientsController extends Controller {
         $data['info_template'] = Utilities::loadTemplateBaseInfo($this->user);
         if ($this->user->hasPermission('clients_edit')) {
             $c = new Clients();
+            $cidade = new Cidade();
 
             if (isset($_POST['name']) && !empty($_POST['name'])) {
                 $name = addslashes($_POST['name']);
@@ -63,15 +64,16 @@ class ClientsController extends Controller {
                 $address_number = addslashes($_POST['address_number']);
                 $address2 = addslashes($_POST['address2']);
                 $address_neighb = addslashes($_POST['address_neighb']);
-                $address_city = addslashes($_POST['address_city']);
+                $address_citycode = addslashes($_POST['address_city']);
                 $address_state = addslashes($_POST['address_state']);
                 $address_country = addslashes($_POST['address_country']);
-
-                $c->add($this->user->getCompany(), $name, $email, $phone, $stars, $internal_obs, $address_zipcode, $address, $address_number, $address2, $address_neighb, $address_city, $address_state, $address_country);
+                $address_city = $cidade->getCity($address_citycode);
+                                
+                
+                $c->add($this->user->getCompany(), $name, $email, $phone, $stars, $internal_obs, $address_zipcode, $address, $address_number, $address2, $address_neighb, $address_city, $address_state, $address_country, $address_citycode);
                 header("Location: " . BASE_URL . "/clients");
             }
 
-            $cidade = new Cidade();
             $data['states'] = $cidade->getStates();
             
             $this->loadTemplate('clients_add', $data);
@@ -86,6 +88,7 @@ class ClientsController extends Controller {
         $data['info_template'] = Utilities::loadTemplateBaseInfo($this->user);
         if ($this->user->hasPermission('clients_edit')) {
             $c = new Clients();
+            $cidade = new Cidade();
 
             if (isset($_POST['name']) && !empty($_POST['name'])) {
                 $name = addslashes($_POST['name']);
@@ -98,16 +101,19 @@ class ClientsController extends Controller {
                 $address_number = addslashes($_POST['address_number']);
                 $address2 = addslashes($_POST['address2']);
                 $address_neighb = addslashes($_POST['address_neighb']);
-                $address_city = addslashes($_POST['address_city']);
+                $address_citycode = addslashes($_POST['address_city']);
                 $address_state = addslashes($_POST['address_state']);
                 $address_country = addslashes($_POST['address_country']);
+                $address_city = $cidade->getCity($address_citycode);
 
-                $c->edit($id, $this->user->getCompany(), $name, $email, $phone, $stars, $internal_obs, $address_zipcode, $address, $address_number, $address2, $address_neighb, $address_city, $address_state, $address_country);
+                $c->edit($id, $this->user->getCompany(), $name, $email, $phone, $stars, $internal_obs, $address_zipcode, $address, $address_number, $address2, $address_neighb, $address_city, $address_state, $address_country, $address_citycode);
                 header("Location: " . BASE_URL . "/clients");
                 exit();
             }
 
             $data['client_info'] = $c->getInfo($id, $this->user->getCompany());
+            $data['states'] = $cidade->getStates();
+            $data['cities'] = $cidade->getCityList($data['client_info']['address_state']);
 
             $this->loadTemplate('clients_edit', $data);
         } else {
