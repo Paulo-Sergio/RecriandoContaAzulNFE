@@ -1,6 +1,6 @@
 <?php
 
-class Nfe extends Model {
+class Nfe extends model {
 
     public function emitirNFE($cNF, $destinatario, $prods, $fatinfo) {
         $nfe = new NFePHP\NFe\MakeNFe();
@@ -30,7 +30,7 @@ class Nfe extends Model {
         //Nota: Para a NFC-e somente estão disponíveis e são válidas as opções de contingência 5 e 9.
         $tpAmb = $nfeTools->aConfig['tpAmb']; //1=Produção; 2=Homologação
         $finNFe = '1'; //1=NF-e normal; 2=NF-e complementar; 3=NF-e de ajuste; 4=Devolução/Retorno.
-        $indFinal = '0'; //0=Normal; 1=Consumidor final;
+        $indFinal = '1'; //0=Normal; 1=Consumidor final;
         $indPres = '2'; //0=Não se aplica (por exemplo, Nota Fiscal complementar ou de ajuste);
         //1=Operação presencial;
         //2=Operação não presencial, pela Internet;
@@ -45,8 +45,7 @@ class Nfe extends Model {
         $dhCont = ''; //entrada em contingência AAAA-MM-DDThh:mm:ssTZD
         $xJust = ''; //Justificativa da entrada em contingência
         $cnpj = $nfeTools->aConfig['cnpj']; // CNPJ do emitente
-
-        /* Numero e versão da NFe (infNFe) */
+        //Numero e versão da NFe (infNFe)
         $ano = date('y', strtotime($dhEmi));
         $mes = date('m', strtotime($dhEmi));
 
@@ -109,94 +108,117 @@ class Nfe extends Model {
         $cPais = $destinatario['end']['cpais']; // Código do País
         $resp = $nfe->tagenderDest($xLgr, $nro, $xCpl, $xBairro, $cMun, $xMun, $UF, $CEP, $cPais, $xPais, $fone);
 
-        // Inicialização de váriaveis
-        $vBC = 0;
-        $vICMSDeson = 0;
-        $vProd = 0;
-        $vFrete = 0;
-        $vSeg = 0;
-        $vDesc = 0;
-        $vOutro = 0;
-        $vII = 0;
-        $vIPI = 0;
-        $vIOF = 0;
-        $vPIS = 0;
-        $vCOFINS = 0;
-        $vICMS = 0;
         $vBCST = 0;
         $vST = 0;
-        $vISS = 0;
+        $vII = 0;
+        $vIPI = 0;
+        $vTotFrete = 0;
+        $vTotSeg = 0;
+        $vTotDesc = 0;
+        $vTotOutro = 0;
+        $vTotTrib = 0;
+        $vTotal = 0;
 
-        $nItem = 1;
-        foreach ($prods as $prod) {
+        foreach ($prods as $pchave => $prod) {
+            $nItem = ($pchave + 1);
 
-            $cProd = $prod['cProd']; // Código do Produto
-            $cEAN = $prod['cEAN']; // Código de Barras (EAN)
-            $xProd = $prod['xProd']; // Descrição do Produto
-            $NCM = $prod['NCM']; // Código NCM (Nomenclatura Comum do MERCOSUL)
-            $EXTIPI = $prod['EXTIPI']; // Código de excessão do NCM
-            $CFOP = $prod['CFOP']; // Código Fiscal de Operações e Prestações
-            $uCom = $prod['uCom']; // Unidade Comercial do produto
-            $qCom = $prod['qCom']; // Quantidade
-            $vUnCom = $prod['vUnCom']; // Valor Unitário
-            $vProd += $prod['vProd']; // Valor do Produto
-            $cEANTrib = $prod['cEANTrib']; // Código de Barra Tributável
-            $uTrib = $prod['uTrib']; // Unidade Tributável
-            $qTrib = $prod['qTrib']; // Quantidade Tributável
-            $vUnTrib = $prod['vUnTrib']; // Valor Unitário de tributação
-            $vFrete += $prod['vFrete']; // Valor Total do Frete
-            $vSeg += $prod['vSeg']; // Valor Total do Seguro
-            $vDesc += $prod['vDesc']; // Valor do Desconto
-            $vOutro += $prod['vOutro']; // Outras Despesas
-            $indTot = $prod['indTot']; // Indica se valor do Item (vProd) entra no valor total da NF-e. As vezes é um brinde
-            $xPed = $prod['xPed']; // Número do Pedido de Compra
-            $nItemPed = $prod['nItemPed']; // Item do Pedido de Compra
-            $nFCI = $prod['nFCI']; // Número de controle da FCI - Importação
-            $vBC += $prod['bc']; // Base de cálculo
-            // Adiciona o produto na nota
-            $nfe->tagprod($nItem, $cProd, $cEAN, $xProd, $NCM, $EXTIPI, $CFOP, $uCom, $qCom, $vUnCom, $prod['vProd'], $cEANTrib, $uTrib, $qTrib, $vUnTrib, $prod['vFrete'], $prod['vSeg'], $prod['vDesc'], $prod['vOutro'], $indTot, $xPed, $nItemPed, $nFCI);
+            $cProd = $prod['cProd'];
+            $cEAN = $prod['cEAN'];
+            $xProd = $prod['xProd'];
+            $NCM = $prod['NCM'];
+            $EXTIPI = $prod['EXTIPI'];
+            $CFOP = $prod['CFOP'];
+            $uCom = $prod['uCom'];
+            $qCom = $prod['qCom'];
+            $vUnCom = $prod['vUnCom'];
+            $vProd = $prod['vProd'];
+            $vBC = $prod['vBC'];
+            $cEANTrib = $prod['cEANTrib'];
+            $uTrib = $prod['uTrib'];
+            $qTrib = $prod['qTrib'];
+            $vUnTrib = $prod['vUnTrib'];
+            $vFrete = $prod['vFrete'];
+            $vSeg = $prod['vSeg'];
+            $vDesc = $prod['vDesc'];
+            $vOutro = $prod['vOutro'];
+            $indTot = $prod['indTot'];
+            $xPed = $prod['xPed'];
+            $nItemPed = $prod['nItemPed'];
+            $nFCI = $prod['nFCI'];
+            $cst = $prod['cst'];
+            $pPIS = $prod['pPIS'];
+            $pCOFINS = $prod['pCOFINS'];
+            $csosn = $prod['csosn'];
+            $pICMS = $prod['pICMS'];
+            $orig = $prod['orig'];
+            $modBC = $prod['modBC'];
+            $vICMSDeson = $prod['vICMSDeson'];
+            $pRedBC = $prod['pRedBC'];
+            $modBCST = $prod['modBCST'];
+            $pMVAST = $prod['pMVAST'];
+            $pRedBCST = $prod['pRedBCST'];
+            $vBCSTRet = $prod['vBCSTRet'];
+            $vICMSSTRet = $prod['vICMSSTRet'];
+            $qBCProd = $prod['qBCProd'];
+            $vAliqProd = $prod['vAliqProd'];
+
+            $vICMS = number_format(($pICMS / 100) * $vProd, 2); //$vICMS = '9.00';
+            $vPIS = number_format(($pPIS / 100) * $vProd, 2); //'0.32';
+            $vCOFINS = number_format(($pCOFINS / 100) * $vProd, 2); //'1.50';
+            $vBCST = $vBC;
+            $pICMSST = $pICMS;
+            $vICMSST = $vICMS;
+
+            $pCredSN = $pICMS;
+            $vCredICMSSN = $vICMS;
+
+            // adicionar produto
+            $nfe->tagprod($nItem, $cProd, $cEAN, $xProd, $NCM, $EXTIPI, $CFOP, $uCom, $qCom, $vUnCom, $vProd, $cEANTrib, $uTrib, $qTrib, $vUnTrib, $vFrete, $vSeg, $vDesc, $vOutro, $indTot, $xPed, $nItemPed, $nFCI);
+
+            // adicionar ICMS Simples Nacional
+            $nfe->tagICMSSN($nItem, $orig, $csosn, $modBC, $vBC, $pRedBC, $pICMS, $vICMS, $pCredSN, $vCredICMSSN, $modBCST, $pMVAST, $pRedBCST, $vBCST, $pICMSST, $vICMSST, $vBCSTRet, $vICMSSTRet);
+
+            // adicionar PIS
+            $nfe->tagPIS(
+                    $nItem, $cst, $vBC, $pPIS, $vPIS, $qBCProd, $vAliqProd
+            );
+
+            // adicionar COFINS
+            $nfe->tagCOFINS(
+                    $nItem, $cst, $vBC, $pCOFINS, // Alíquota do COFINS (em %)
+                    $vCOFINS, $qBCProd, // Quantidade vendida
+                    $vAliqProd// Alíquota do PIS (em reais)
+            );
 
             // Imposto Total deste produto
-            $vTotTrib = $prod['impostoTotal']; // ICMS + IPI + PIS + COFINS, etc...
-            $nfe->tagimposto($nItem, $vTotTrib);
+            $vTrib = $vICMS + $vPIS + $vCOFINS;
 
-            // ICMS
-            $vICMS += $prod['icms'];
-            //$nfe->tagICMS(...);
-            // IPI
-            $vIPI += $prod['ipi'];
-            //$nfe->tagIPI(...);
-            // PIS
-            $vPIS += $prod['pis'];
-            //$nfe->tagPIS(...);
-            // CONFINS
-            $vCOFINS += $prod['cofins'];
-            //$nfe->tagCOFINS(...);
+            $nfe->tagimposto($nItem, number_format($vTrib, 2));
 
-            $nItem++;
+            $vBCST += $vICMS;
+            $vST += $vICMS;
+            $vTotFrete += $vFrete;
+            $vTotSeg += $vSeg;
+            $vTotDesc += $vDesc;
+            $vTotOutro += $vOutro;
+            $vTotTrib += $vTrib;
+            $vTotal += ($vProd + $vICMS + $vFrete + $vSeg - $vDesc + $vOutro + $vTrib);
         }
 
-        // Valor da NF
-        $vNF = number_format($vProd - $vDesc - $vICMSDeson + $vST + $vFrete + $vSeg + $vOutro + $vII + $vIPI, 2, '.', '');
-
-        // Valor Total Tributável
-        $vTotTrib = number_format($vICMS + $vST + $vII + $vIPI + $vPIS + $vCOFINS + $vIOF + $vISS, 2, '.', '');
-
-        // Grupos Totais
-        $nfe->tagICMSTot($vBC, $vICMS, $vICMSDeson, $vBCST, $vST, $vProd, $vFrete, $vSeg, $vDesc, $vII, $vIPI, $vPIS, $vCOFINS, $vOutro, $vNF, $vTotTrib);
+        $vTotTrib = number_format($vTotTrib, 2);
+        // adicionar grupo de ICMS total
+        $nfe->tagICMSTot($vBCST, $vICMS, $vICMSDeson, $vBCST, $vST, $vProd, $vTotFrete, $vTotSeg, $vTotDesc, $vII, $vIPI, $vPIS, $vCOFINS, $vTotOutro, $vTotal, $vTotTrib);
 
         // Frete
-        $modFrete = '9'; //0=Por conta do emitente; 1=Por conta do destinatário/remetente; 2=Por conta de terceiros; 9=Sem Frete;
-        $nfe->tagtransp($modFrete);
-
+        $nfe->tagtransp($fatinfo['modFrete']); //0=Por conta do emitente; 1=Por conta do destinatário/remetente; 2=Por conta de terceiros; 9=Sem Frete;
         // Dados da fatura
         $nFat = $fatinfo['nfat']; // Número da Fatura
         $vOrig = $fatinfo['vorig']; // Valor original da fatura
         $vDesc = $fatinfo['vdesc']; // Valor do desconto
-        $vLiq = $fatinfo['nfat']; // Valor Líquido
+        $vLiq = ($fatinfo['vorig'] - $fatinfo['vdesc']); // Valor Líquido
         $nfe->tagfat($nFat, $vOrig, $vDesc, $vLiq);
 
-        // Monta[XML] a NF-e e retorna o resultado
+        // Monta a NF-e e retorna o resultado
         $resp = $nfe->montaNFe();
         if ($resp === true) {
             $xml = $nfe->getXML();
@@ -248,9 +270,7 @@ class Nfe extends Model {
             $nfeTools->addProtocolo($pathNFefile, $pathProtfile, true);
 
             // Gera o DANFE
-            //$docxml = new NFePHP\Common\Files\FilesFolders::readFile($pathProtfile);
-            $docxml_ = new NFePHP\Common\Files\FilesFolders();
-            $docxml = $docxml_::readFile($pathProtfile);
+            $docxml = NFePHP\Common\Files\FilesFolders::readFile($pathNFefile);
 
             $docFormat = $nfeTools->aConfig['aDocFormat']->format;
             $docPaper = $nfeTools->aConfig['aDocFormat']->paper;
@@ -263,7 +283,7 @@ class Nfe extends Model {
             return $chave;
         } else {
             foreach ($nfe->erros as $erro) {
-                echo $erro['tag'] . ' - ' . $erro['desc'] . '<br>';
+                echo $erro['tag'] . ' - ' . $erro['desc'] . "<br/>";
             }
         }
     }

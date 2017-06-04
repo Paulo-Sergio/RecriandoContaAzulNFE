@@ -19,6 +19,39 @@ class Sales extends Model {
         return null;
     }
 
+    public function getAllInfo($idSale, $idCompany) {
+        $array = array();
+        $sql = "SELECT * FROM sales WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $idSale);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            $array['info'] = $stmt->fetch();
+        }
+
+        $sql = "SELECT id_product, quant, sale_price FROM sales_products WHERE id_sale = :id_sale";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_sale', $idSale);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            $array['products'] = $stmt->fetchAll();
+            $i = new Inventory();
+            foreach ($array['products'] as $pkey => $pval) {
+                $array['products'][$pkey]['c'] = $i->getInfo($pval['id_product'], $idCompany);
+            }
+        }
+
+        return $array;
+    }
+    
+    public function setNFEKey($chave, $idSale) {
+        $sql = "UPDATE sales SET nfe_key = :nfe_key WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':nfe_key', $chave);
+        $stmt->bindParam(':id', $idSale);
+        $stmt->execute();
+    }
+
     public function getInfo($id, $idCompany) {
         $array = array();
 
