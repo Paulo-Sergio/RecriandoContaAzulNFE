@@ -26,8 +26,8 @@ class Controller {
     }
 
     public function loadLibrary($lib) {
-        if (file_exists('libraries/' . $lib . '.php')) {
-            include 'libraries/' . $lib . '.php';
+        if (file_exists('vendor/' . $lib . '.php')) {
+            include 'vendor/' . $lib . '.php';
         }
     }
 

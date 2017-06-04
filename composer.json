@@ -1,5 +1,6 @@
 {
     "require": {
-        "nfephp-org/nfephp": "^4.0"
+        "nfephp-org/nfephp": "^4.0",
+        "mpdf/mpdf": "^6.0"
     }
 }
