@@ -25,10 +25,4 @@ class Controller {
         include './views/' . $viewName . '.php';
     }
 
-    public function loadLibrary($lib) {
-        if (file_exists('vendor/' . $lib . '.php')) {
-            include 'vendor/' . $lib . '.php';
-        }
-    }
-
 }
