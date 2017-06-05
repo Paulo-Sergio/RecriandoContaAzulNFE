@@ -99,9 +99,6 @@ class ReportController extends Controller {
 
             $data['filters'] = $_GET;
 
-            // carregando biblioteca para geração do pdf
-            $this->loadLibrary('mpdf60/mpdf');
-
             ob_start(); // iniciando buffer [armazenando na memoria o que era pra ser carregado na view]
             $this->loadView('report_inventory_pdf', $data);
             $html = ob_get_contents(); // pegando tudo armazenado no buffer e colocando na variavel $html
